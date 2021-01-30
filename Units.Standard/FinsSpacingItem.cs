@@ -177,6 +177,12 @@ namespace Units.Standard
             Value = value;
         }
 
+
+        public static class Factory
+        {
+            public static FinsSpacingItem Create(double value, string unit) { return new FinsSpacingItem(value, unit); }
+        }
+
         public object ToLiquid()
         {
             return new

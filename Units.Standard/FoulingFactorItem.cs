@@ -1,10 +1,12 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
 namespace Units.Standard
 {
-    public class Units : IFoulingFactor, INotifyPropertyChanged, IUnit, ILiquidizable
+    public class FoulingFactorItem : IFoulingFactor, INotifyPropertyChanged, IUnit, ILiquidizable
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,10 +21,15 @@ namespace Units.Standard
 
         #endregion
 
-        public Units(double value, string unit)
+        public FoulingFactorItem(double value, string unit)
         {
             Unit = unit;
             Value = value;
+        }
+
+        public static class Factory
+        {
+            public static FoulingFactorItem Create(double value, string unit) { return new FoulingFactorItem(value, unit); }
         }
 
         #region IFoulingFactor
@@ -105,6 +112,23 @@ namespace Units.Standard
                 _Value = value;
                 OnPropertyChanged(nameof(Value));
                 UpdateWhenValueChanged();
+
+            }
+        }
+
+        private string _ValueAsString { get; set; }
+        public string ValueAsString
+        {
+            get
+            {
+                return _ValueAsString;
+            }
+            set
+            {
+                if (_ValueAsString == value)
+                    return;
+                _ValueAsString = value;
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
@@ -114,9 +138,11 @@ namespace Units.Standard
             {
                 case U.Sqft_h_FPerBtu:
                     Value = ValueInSqft_h_FPerBtu;
+                    ValueAsString = Value.ToString("N6");
                     break;
                 case U.SqM_CPerkW:
                     Value = ValueInSqM_CPerkW;
+                    ValueAsString = Value.ToString("N6");
                     break;
                 default:
                     break;
@@ -131,11 +157,13 @@ namespace Units.Standard
                     double valueSqft_h_FPerBtu = Value;
                     ValueInSqft_h_FPerBtu = valueSqft_h_FPerBtu;
                     ValueInSqM_CPerkW = Converter.ConvertFoulingFactorFrom_Sqft_h_FPerBtu_to_SqM_CPerkW(valueSqft_h_FPerBtu);
+                    ValueAsString = Value.ToString("N6");
                     break;
                 case U.SqM_CPerkW:
                     double valueInSqM_CPerkW = Value;
                     ValueInSqM_CPerkW = valueInSqM_CPerkW;
                     ValueInSqft_h_FPerBtu = Converter.ConvertFoulingFactorFrom_SqM_CPerkW_to_Sqft_h_FPerBtu(valueInSqM_CPerkW);
+                    ValueAsString = Value.ToString("N6");
                     break;
                 default:
                     break;
@@ -153,10 +181,11 @@ namespace Units.Standard
         {
             return new
             {
-                Value,
+                Value = Value.ToSignificantDigits(4),
                 Unit,
                 ValueInSqft_h_FPerBtu,
-                ValueInSqM_CPerkW
+                ValueInSqM_CPerkW,
+                ValueAsString
             };
         }
 

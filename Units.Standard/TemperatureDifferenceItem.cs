@@ -27,6 +27,12 @@ namespace Units.Standard
             Value = value;
         }
 
+
+        public static class Factory
+        {
+            public static TemperatureDifferenceItem Create(double value, string unit) { return new TemperatureDifferenceItem(value, unit); }
+        }
+
         #endregion
 
         #region IUnits

@@ -4,7 +4,7 @@
     {
         double ValueInGPM { get; set; }
         double ValueInLPS { get; set; }
-        double ValueInMPS { get; set; }
+        double ValueInM3PS { get; set; }
 
         string Unit { get; set; }
     }

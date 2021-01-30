@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -14,6 +15,7 @@ namespace Units.Standard
         string Unit { get; set; }
     }
 
+    [Serializable]
     public class VelocityItem : IUnit, IVelocityItem, INotifyPropertyChanged, ILiquidizable
     {
         #region NotifiedPropertyChanged
@@ -125,6 +127,33 @@ namespace Units.Standard
             }
         }
 
+
+        public string ValueAsString => Value == 0 ? "-" : Value.ToString("N1");
+
+
+
+        public static VelocityItem Parse(string s, IFormatProvider formatProvider)
+        {
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return VelocityItem.Factory.Create(r, U.MPS);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+                if (isNumber)
+                {
+                    return VelocityItem.Factory.Create(v, U.MPS);
+                }
+
+                return VelocityItem.Factory.Create(0, U.MPS);
+            }
+        }
+
         public VelocityItem(double valueInFtPerMin, double valueInMPS, string unit)
         {
 
@@ -168,6 +197,11 @@ namespace Units.Standard
                 ValueInMPS,
                 ValueInFtPerMin
             };
+        }
+
+        public override string ToString()
+        {
+            return $"{Value.ToString("N2")} {Unit}";
         }
     }
 }

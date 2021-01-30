@@ -56,6 +56,25 @@ namespace Units.Standard
         }
 
 
+
+
+
+        private double _ValueInM { get; set; } 
+        public double ValueInM
+        {
+            get
+            {
+                return _ValueInM;
+            }
+            set
+            {
+                if (_ValueInM == value)
+                    return;
+                _ValueInM = value;
+                OnPropertyChanged(nameof(ValueInM));
+            }
+        }
+
         #endregion
 
         #region IUnits
@@ -108,6 +127,9 @@ namespace Units.Standard
                 case U.mm:
                     Value = ValueInMM;
                     break;
+                case U.m:
+                    Value = ValueInM;
+                    break;
 
                 default:
                     break;
@@ -120,13 +142,22 @@ namespace Units.Standard
             {
                 double valueInInch = Value;
                 ValueInInch = valueInInch;
-                ValueInMM = Converter.ConvertLengthFrom_In_To_M(valueInInch) * 1000;
+                ValueInMM = Converter.ConvertLengthFrom_In_To_M(valueInInch) * 1000.0;
+                ValueInM = Converter.ConvertLengthFrom_In_To_M(valueInInch);
             }
-            else
+            else if(Unit == U.m)
+            {
+                double valueInM = Value;
+                ValueInM = valueInM;
+                ValueInInch = Converter.ConvertLengthFrom_M_To_In(valueInM);
+                ValueInM = valueInM * 1000.0;
+            }
+            else 
             {
                 double valueInMM = Value;
                 ValueInMM = valueInMM;
-                ValueInInch = Converter.ConvertLengthFrom_M_To_In(valueInMM / 1000);
+                ValueInInch = Converter.ConvertLengthFrom_M_To_In(valueInMM / 1000.0);
+                ValueInM = valueInMM / 1000.0;
             }
         }
 
@@ -146,6 +177,11 @@ namespace Units.Standard
 
         }
 
+        public static class Factory
+        {
+            public static CoilLengthItem Create(double value, string unit) { return new CoilLengthItem(value, unit); }
+        }
+
         public object ToLiquid()
         {
             return new
@@ -153,7 +189,8 @@ namespace Units.Standard
                 Value,
                 Unit,
                 ValueInInch,
-                ValueInMM
+                ValueInMM,
+                ValueInM
             };
         }
 

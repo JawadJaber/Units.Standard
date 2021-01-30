@@ -10,22 +10,22 @@ namespace Units.Standard
             if (unit == U.GPM)
             {
                 ValueInGPM = valueInGPM;
-                ValueInMPS = Converter.ConvertWaterFlowFrom_GMP_To_MPS(valueInGPM);
-                ValueInLPS = Converter.ConvertWaterFlowFrom_MPS_To_LPS(ValueInMPS);
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(ValueInM3PS);
                 Unit = unit;
             }
-            else if (unit == U.MPS)
+            else if (unit == U.M3PS)
             {
-                ValueInMPS = valueInMPS;
-                ValueInGPM = Converter.ConvertWaterFlowFrom_MPS_To_GPM(valueInMPS);
-                ValueInLPS = Converter.ConvertWaterFlowFrom_MPS_To_LPS(valueInMPS);
+                ValueInM3PS = valueInMPS;
+                ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(valueInMPS);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(valueInMPS);
                 Unit = unit;
             }
-            else if (unit == U.LPS)
+            else if (unit == U.LPS || unit == U.LpS)
             {
                 ValueInLPS = valueInLPS;
-                ValueInMPS = Converter.ConvertWaterFlowFrom_LPS_To_MPS(valueInLPS);
-                ValueInGPM = Converter.ConvertWaterFlowFrom_MPS_To_GPM(ValueInMPS);
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_LPS_To_M3PS(valueInLPS);
+                ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(ValueInM3PS);
                 Unit = unit;
             }
 
@@ -117,7 +117,7 @@ namespace Units.Standard
         }
 
         private double _ValueInMPS { get; set; }
-        public double ValueInMPS
+        public double ValueInM3PS
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Units.Standard
                 if (_ValueInMPS == value)
                     return;
                 _ValueInMPS = value;
-                OnPropertyChanged(nameof(ValueInMPS));
+                OnPropertyChanged(nameof(ValueInM3PS));
             }
         }
 
@@ -140,13 +140,13 @@ namespace Units.Standard
             {
                 Value = ValueInGPM;
             }
-            else if (Unit == U.LPS)
+            else if (Unit == U.LPS || Unit == U.LpS)
             {
                 Value = ValueInLPS;
             }
-            else if (Unit == U.MPS)
+            else if (Unit == U.M3PS)
             {
-                Value = ValueInMPS;
+                Value = ValueInM3PS;
             }
 
         }
@@ -157,22 +157,22 @@ namespace Units.Standard
             {
                 double valueInGPM = Value;
                 ValueInGPM = valueInGPM;
-                ValueInMPS = Converter.ConvertWaterFlowFrom_GMP_To_MPS(valueInGPM);
-                ValueInLPS = Converter.ConvertWaterFlowFrom_MPS_To_LPS(Converter.ConvertWaterFlowFrom_GMP_To_MPS(valueInGPM));
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM));
             }
-            else if (Unit == U.LPS)
+            else if (Unit == U.LPS || Unit == U.LpS)
             {
                 double valueInLPS = Value;
                 ValueInLPS = valueInLPS;
-                ValueInGPM = Converter.ConvertWaterFlowFrom_MPS_To_GPM(Converter.ConvertWaterFlowFrom_LPS_To_MPS(valueInLPS));
-                ValueInMPS = Converter.ConvertWaterFlowFrom_LPS_To_MPS(valueInLPS);
+                ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(Converter.ConvertWaterFlowFrom_LPS_To_M3PS(valueInLPS));
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_LPS_To_M3PS(valueInLPS);
             }
-            else if (Unit == U.MPS)
+            else if (Unit == U.M3PS)
             {
                 double valueInMPS = Value;
-                ValueInMPS = valueInMPS;
-                ValueInGPM = Converter.ConvertWaterFlowFrom_MPS_To_GPM(valueInMPS);
-                ValueInLPS = Converter.ConvertWaterFlowFrom_MPS_To_LPS(valueInMPS);
+                ValueInM3PS = valueInMPS;
+                ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(valueInMPS);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(valueInMPS);
             }
 
         }
@@ -201,7 +201,7 @@ namespace Units.Standard
                 Unit,
                 ValueInGPM,
                 ValueInLPS,
-                ValueInMPS
+                ValueInM3PS
             };
         }
     }

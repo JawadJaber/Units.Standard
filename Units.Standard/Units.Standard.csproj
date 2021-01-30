@@ -1,8 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.5</Version>
+    <Version>1.0.14</Version>
+    <Product>Units.Standard</Product>
+    <Description>Standard library that is can be used friendly with Wpf and MVVM environments.</Description>
+    <PackageId>Units.Standard</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>CoillengthItem updated
+FoulingFactorItem added
+ToDouble_StringFormat Added
+Support IComparable and Parse(string,iformatable) necessary for propertytools
+Fixed LpS issue</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <FileVersion>1.0.14</FileVersion>
+    <Company>Jawad S. Jaber</Company>
+    <AssemblyVersion>1.0.14</AssemblyVersion>
+    <Authors>Jawad S. Jaber</Authors>
   </PropertyGroup>
 
   <ItemGroup>

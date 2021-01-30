@@ -4,6 +4,8 @@
     {
         double ValueInInch { get; set; }
         double ValueInMM { get; set; }
+        double ValueInM { get; set; }
+
 
     }
 }

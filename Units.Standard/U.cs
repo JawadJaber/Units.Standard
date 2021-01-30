@@ -15,7 +15,9 @@ namespace Units.Standard
         public const string C = "°C";
         public const string CFM = "CFM";
         public const string LPS = "LPS";
+        public const string LpS = "L/s";
         public const string MPS = "m/s";
+        public const string M3PS = "m³/s";
         public const string CMH = "m³/hr";
         public const string TR = "TR";
         public const string MBH = "MBH";
@@ -47,5 +49,13 @@ namespace Units.Standard
 
         public const string NewtonPerM = "N/m";
         public const string DynePerCM = "Dyne/cm";
+        
+        
+        
+        public const string SqFt = "ft²";
+        public const string SqM = "m²";
+        public const string SqIn = "in²";
+
+
     }
 }

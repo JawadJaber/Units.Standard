@@ -83,17 +83,17 @@ namespace Units.Standard
 
 
 
-        public static double ConvertAirFlowFrom_MPS_To_CFM(double FlowInMPS)
+        public static double ConvertAirFlowFrom_M3PS_To_CFM(double FlowInMPS)
         {
             return FlowInMPS * 2118.880003;
         }
 
-        public static double ConvertAirFlowFrom_MPS_To_LPS(double FlowInMPS)
+        public static double ConvertAirFlowFrom_M3PS_To_LPS(double FlowInMPS)
         {
             return FlowInMPS * 1000.0;
         }
 
-        public static double ConvertAirFlowFrom_MPS_To_CMH(double FlowInMPS)
+        public static double ConvertAirFlowFrom_M3PS_To_CMH(double FlowInMPS)
         {
             return FlowInMPS * 3600.0;
         }
@@ -104,12 +104,12 @@ namespace Units.Standard
             return FlowInCFM / 2118.880003;
         }
 
-        public static double ConvertAirFlowFrom_LPS_To_MPS(double FlowInLPS)
+        public static double ConvertAirFlowFrom_LPS_To_M3PS(double FlowInLPS)
         {
             return FlowInLPS / 1000.0;
         }
 
-        public static double ConvertAirFlowFrom_CMH_To_MPS(double FlowInCMH)
+        public static double ConvertAirFlowFrom_CMH_To_M3PS(double FlowInCMH)
         {
             return FlowInCMH / 3600.0;
         }
@@ -118,11 +118,11 @@ namespace Units.Standard
 
 
 
-        public static double ConvertWaterFlowFrom_MPS_To_GPM(double FlowInMPS)
+        public static double ConvertWaterFlowFrom_M3PS_To_GPM(double FlowInMPS)
         {
             return FlowInMPS * 15850.372483753;//13198.127997058;
         }
-        public static double ConvertWaterFlowFrom_MPS_To_LPS(double FlowInMPS)
+        public static double ConvertWaterFlowFrom_M3PS_To_LPS(double FlowInMPS)
         {
             return FlowInMPS * 1000.0;
         }
@@ -134,12 +134,12 @@ namespace Units.Standard
         }
 
 
-        public static double ConvertWaterFlowFrom_GMP_To_MPS(double FlowInGPM)
+        public static double ConvertWaterFlowFrom_GMP_To_M3PS(double FlowInGPM)
         {
             return FlowInGPM / 15850.372483753;//13198.127997058;
         }
 
-        public static double ConvertWaterFlowFrom_LPS_To_MPS(double FlowInLPS)
+        public static double ConvertWaterFlowFrom_LPS_To_M3PS(double FlowInLPS)
         {
             return FlowInLPS / 1000.0;
         }
@@ -258,5 +258,39 @@ namespace Units.Standard
         {
             return kg / 2.20462;
         }
+
+
+
+        public static double ConvertAreaFrom_SqM_To_SqFt(double areaInSqM)
+        {
+            return areaInSqM * 10.764;
+        }
+
+        public static double ConvertAreaFrom_SqFt_To_SqM(double areaInSqFt)
+        {
+            return areaInSqFt / 10.764;
+        }
+
+        public static double ConvertAreaFrom_SqM_To_SqIn(double areaInSqM)
+        {
+            return areaInSqM * 1550.0;
+        }
+
+        public static double ConvertAreaFrom_SqIn_To_SqM(double areaInSqIn)
+        {
+            return areaInSqIn / 1550.0;
+        }
+
+
+        public static double ConvertAreaFrom_SqFt_To_SqIn(double areaInSqFt)
+        {
+            return areaInSqFt * 144.0;
+        }
+
+        public static double ConvertAreaFrom_SqIn_To_SqFt(double areaInSqIn)
+        {
+            return areaInSqIn / 144.0;
+        }
+
     }
 }

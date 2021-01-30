@@ -54,5 +54,10 @@ namespace Units.Standard
             return Convert.ToDouble(result);
         }
 
+        public static double ToDouble_StringFormat(this double value,string format)
+        {
+            return double.Parse(value.ToString(format));
+        }
+
     }
 }

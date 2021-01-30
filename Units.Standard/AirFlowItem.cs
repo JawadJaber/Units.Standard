@@ -1,5 +1,7 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -72,7 +74,7 @@ namespace Units.Standard
         }
 
         private double _ValueInMPS { get; set; }
-        public double ValueInMPS
+        public double ValueInM3PS
         {
             get
             {
@@ -83,7 +85,7 @@ namespace Units.Standard
                 if (_ValueInMPS == value)
                     return;
                 _ValueInMPS = value;
-                OnPropertyChanged(nameof(ValueInMPS));
+                OnPropertyChanged(nameof(ValueInM3PS));
             }
         }
 
@@ -126,39 +128,63 @@ namespace Units.Standard
 
 
         #region Construction
+      
+        public static AirFlowItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return AirFlowItem.Factory.Create(r, U.LPS);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return AirFlowItem.Factory.Create(v, U.LPS);
+                }
+
+                return AirFlowItem.Factory.Create(0, U.LPS);
+            }
+        }
 
         public AirFlowItem(double valueInCFM, double valueInMPS, double valueInCMH, double valueInLPS, string unit)
         {
             if (unit == U.CFM)
             {
                 ValueInCFM = valueInCFM;
-                ValueInMPS = Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM);
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM);
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
                 Unit = unit;
             }
-            else if (unit == U.MPS)
+            else if (unit == U.M3PS)
             {
-                ValueInMPS = valueInMPS;
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(valueInMPS);
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(valueInMPS);
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(valueInMPS);
+                ValueInM3PS = valueInMPS;
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(valueInMPS);
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(valueInMPS);
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(valueInMPS);
                 Unit = unit;
             }
             else if (unit == U.CMH)
             {
                 ValueInCMH = valueInCMH;
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH));
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH));
-                ValueInMPS = Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH);
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH));
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH);
                 Unit = unit;
             }
-            else if (unit == U.LPS)
+            else if (unit == U.LPS || unit == U.LpS)
             {
                 ValueInLPS = valueInLPS;
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS));
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS));
-                ValueInMPS = Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS);
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS));
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS);
                 Unit = unit;
             }
         }
@@ -187,11 +213,11 @@ namespace Units.Standard
             {
                 Value = ValueInCMH;
             }
-            else if (Unit == U.MPS)
+            else if (Unit == U.M3PS)
             {
-                Value = ValueInMPS;
+                Value = ValueInM3PS;
             }
-            else if (Unit == U.LPS)
+            else if (Unit == U.LPS || Unit == U.LpS)
             {
                 Value = ValueInLPS;
             }
@@ -204,34 +230,34 @@ namespace Units.Standard
             {
                 double valueInCFM = Value;
                 ValueInCFM = valueInCFM;
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
-                ValueInMPS = Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM);
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_CFM_To_MPS(valueInCFM);
 
             }
             else if (Unit == U.CMH)
             {
                 double valueInCMH = Value;
                 ValueInCMH = valueInCMH;
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH));
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH));
-                ValueInMPS = Converter.ConvertAirFlowFrom_CMH_To_MPS(valueInCMH);
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH));
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_CMH_To_M3PS(valueInCMH);
             }
-            else if (Unit == U.LPS)
+            else if (Unit == U.LPS || Unit == U.LpS)
             {
                 double valueInLPS = Value;
                 ValueInLPS = valueInLPS;
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS));
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS));
-                ValueInMPS = Converter.ConvertAirFlowFrom_LPS_To_MPS(valueInLPS);
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS));
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS));
+                ValueInM3PS = Converter.ConvertAirFlowFrom_LPS_To_M3PS(valueInLPS);
             }
-            else if (Unit == U.MPS)
+            else if (Unit == U.M3PS)
             {
                 double valueInMPS = Value;
-                ValueInMPS = valueInMPS;
-                ValueInCMH = Converter.ConvertAirFlowFrom_MPS_To_CMH(valueInMPS);
-                ValueInLPS = Converter.ConvertAirFlowFrom_MPS_To_LPS(valueInMPS);
-                ValueInCFM = Converter.ConvertAirFlowFrom_MPS_To_CFM(valueInMPS);
+                ValueInM3PS = valueInMPS;
+                ValueInCMH = Converter.ConvertAirFlowFrom_M3PS_To_CMH(valueInMPS);
+                ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(valueInMPS);
+                ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(valueInMPS);
             }
         }
 
@@ -249,8 +275,42 @@ namespace Units.Standard
                 ValueInCFM,
                 ValueInCMH,
                 ValueInLPS,
-                ValueInMPS
+                ValueInM3PS
             };
+        }
+
+
+
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is AirFlowItem)
+            {
+                return this.CompareTo((AirFlowItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+           
+        }
+
+        public int CompareTo(AirFlowItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }
