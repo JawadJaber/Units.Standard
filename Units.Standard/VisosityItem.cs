@@ -159,6 +159,12 @@ namespace Units.Standard
             public static ViscosityItem Create(double value, string unit) { return new ViscosityItem(value, unit); }
         }
 
+
+        public static ViscosityItem Create(ViscosityItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

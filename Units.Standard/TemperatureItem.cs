@@ -148,6 +148,12 @@ namespace Units.Standard
             public static TemperatureItem Create(double value, string unit) { return new TemperatureItem(value, unit); }
         }
 
+
+        public static TemperatureItem Create(TemperatureItem item)
+        {
+            return TemperatureItem.Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

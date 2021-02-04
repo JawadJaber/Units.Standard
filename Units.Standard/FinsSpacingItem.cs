@@ -183,6 +183,11 @@ namespace Units.Standard
             public static FinsSpacingItem Create(double value, string unit) { return new FinsSpacingItem(value, unit); }
         }
 
+        public static FinsSpacingItem Create(FinsSpacingItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

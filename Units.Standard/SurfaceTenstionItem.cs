@@ -160,6 +160,12 @@ namespace Units.Standard
             public static SurfaceTenstionItem Create(double value, string unit) { return new SurfaceTenstionItem(value, unit); }
         }
 
+
+        public static SurfaceTenstionItem Create(SurfaceTenstionItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

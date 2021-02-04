@@ -119,6 +119,12 @@ namespace Units.Standard
             public static AltitudeItem Create(double value, string unit) { return new AltitudeItem(value, unit); }
         }
 
+
+        public static AltitudeItem Create(AltitudeItem item)
+        {
+            return AltitudeItem.Factory.Create(item.Value, item.Unit);
+        }
+
         #endregion
 
 

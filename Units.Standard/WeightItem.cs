@@ -159,6 +159,11 @@ namespace Units.Standard
             public static WeightItem Create(double value, string unit) { return new WeightItem(value, unit); }
         }
 
+        public static WeightItem Create(WeightItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

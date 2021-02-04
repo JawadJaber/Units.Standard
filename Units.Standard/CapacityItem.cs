@@ -186,6 +186,12 @@ namespace Units.Standard
             public static CapacityItem Create(double value, string unit) { return new CapacityItem(value, unit); }
         }
 
+
+        public static CapacityItem Create(CapacityItem item)
+        {
+            return CapacityItem.Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

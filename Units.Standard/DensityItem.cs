@@ -159,6 +159,12 @@ namespace Units.Standard
             public static DensityItem Create(double value, string unit) { return new DensityItem(value, unit); }
         }
 
+
+        public static DensityItem Create(DensityItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

@@ -47,6 +47,11 @@ namespace Units.Standard
             public static WaterFlowItem Create(double value, string unit) { return new WaterFlowItem(value, unit); }
         }
 
+        public static WaterFlowItem Create(WaterFlowItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
 
         #region Properties
 

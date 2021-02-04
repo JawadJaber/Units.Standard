@@ -188,6 +188,12 @@ namespace Units.Standard
             public static VelocityItem Create(double value, string unit) { return new VelocityItem(value, unit); }
         }
 
+
+        public static VelocityItem Create(VelocityItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

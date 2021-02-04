@@ -33,6 +33,11 @@ namespace Units.Standard
             public static TemperatureDifferenceItem Create(double value, string unit) { return new TemperatureDifferenceItem(value, unit); }
         }
 
+        public static TemperatureDifferenceItem Create(TemperatureDifferenceItem item)
+        {
+            return  Factory.Create(item.Value, item.Unit); 
+        }
+
         #endregion
 
         #region IUnits

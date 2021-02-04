@@ -182,6 +182,11 @@ namespace Units.Standard
             public static CoilLengthItem Create(double value, string unit) { return new CoilLengthItem(value, unit); }
         }
 
+        public static CoilLengthItem Create(CoilLengthItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

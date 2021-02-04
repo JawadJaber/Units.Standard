@@ -36,6 +36,12 @@ namespace Units.Standard
         {
             public static PressureDropITem Create(double value, string unit) { return new PressureDropITem(value, unit); }
         }
+
+        public static PressureDropITem Create(PressureDropITem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         #endregion
 
         #region IPressureDrop

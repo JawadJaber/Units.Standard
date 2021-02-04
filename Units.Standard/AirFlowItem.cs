@@ -266,6 +266,11 @@ namespace Units.Standard
             public static AirFlowItem Create(double value, string unit) { return new AirFlowItem(value, unit); }
         }
 
+        public static AirFlowItem Create(AirFlowItem item)
+        {
+            return AirFlowItem.Factory.Create(item.Value, item.Unit);
+        }
+
         public object ToLiquid()
         {
             return new

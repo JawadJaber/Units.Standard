@@ -32,6 +32,12 @@ namespace Units.Standard
             public static FoulingFactorItem Create(double value, string unit) { return new FoulingFactorItem(value, unit); }
         }
 
+
+        public static FoulingFactorItem Create(FoulingFactorItem item)
+        {
+            return Factory.Create(item.Value, item.Unit);
+        }
+
         #region IFoulingFactor
 
 

@@ -146,6 +146,12 @@ namespace Units.Standard
             public static AreaItem Create(double value, string unit) { return new AreaItem(value, unit); }
         }
 
+
+        public static AreaItem Create(AreaItem item)
+        {
+            return AreaItem.Factory.Create(item.Value, item.Unit);
+        }
+
         #endregion
 
         public object ToLiquid()
