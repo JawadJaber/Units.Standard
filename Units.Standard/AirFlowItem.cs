@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
-    public class AirFlowItem : IUnit, IAirFlow, INotifyPropertyChanged, ILiquidizable
+    public class AirFlowItem : IUnit, IAirFlow, INotifyPropertyChanged, ILiquidizable,IComparable,IComparable<AirFlowItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -135,7 +135,7 @@ namespace Units.Standard
             var dValue = double.TryParse(s, out double r);
             if (dValue)
             {
-                return AirFlowItem.Factory.Create(r, U.LPS);
+                return AirFlowItem.Factory.Create(r, U.LpS);
             }
             else
             {
@@ -146,10 +146,10 @@ namespace Units.Standard
 
                 if (isNumber)
                 {
-                    return AirFlowItem.Factory.Create(v, U.LPS);
+                    return AirFlowItem.Factory.Create(v, U.LpS);
                 }
 
-                return AirFlowItem.Factory.Create(0, U.LPS);
+                return AirFlowItem.Factory.Create(0, U.LpS);
             }
         }
 

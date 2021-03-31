@@ -15,7 +15,7 @@ namespace Units.Standard
         string Unit { get; set; }
     }
 
-    public class SurfaceTenstionItem : IUnit, ISurfaceTenstionItem, INotifyPropertyChanged, ILiquidizable
+    public class SurfaceTenstionItem : IUnit, ISurfaceTenstionItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<SurfaceTenstionItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -175,6 +175,34 @@ namespace Units.Standard
                 ValueInNewtonPerM,
                 ValueInDynePerCM
             };
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is SurfaceTenstionItem)
+            {
+                return this.CompareTo((SurfaceTenstionItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(SurfaceTenstionItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
    

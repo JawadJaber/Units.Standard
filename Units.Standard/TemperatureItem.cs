@@ -1,9 +1,10 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class TemperatureItem : IUnit, ITemperature, INotifyPropertyChanged, ILiquidizable
+    public class TemperatureItem : IUnit, ITemperature, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<TemperatureItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -164,5 +165,33 @@ namespace Units.Standard
                 ValueInF
             };
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is TemperatureItem)
+            {
+                return this.CompareTo((TemperatureItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(TemperatureItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
     }
 }

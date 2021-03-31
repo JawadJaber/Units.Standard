@@ -16,7 +16,7 @@ namespace Units.Standard
     }
 
     [Serializable]
-    public class VelocityItem : IUnit, IVelocityItem, INotifyPropertyChanged, ILiquidizable
+    public class VelocityItem : IUnit, IVelocityItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<VelocityItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -209,5 +209,36 @@ namespace Units.Standard
         {
             return $"{Value.ToString("N2")} {Unit}";
         }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is VelocityItem)
+            {
+                return this.CompareTo((VelocityItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(VelocityItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
+
+
     }
 }

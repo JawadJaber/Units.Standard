@@ -1,9 +1,10 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class PressureDropITem : INotifyPropertyChanged, IUnit, IPressureDrop, ILiquidizable
+    public class PressureDropITem : INotifyPropertyChanged, IUnit, IPressureDrop, ILiquidizable, IComparable, IComparable<PressureDropITem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -283,6 +284,34 @@ namespace Units.Standard
                 ValueInPa,
                 ValueInPSI
             };
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is PressureDropITem)
+            {
+                return this.CompareTo((PressureDropITem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(PressureDropITem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
     }

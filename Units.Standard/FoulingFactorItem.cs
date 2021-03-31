@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Units.Standard
 {
-    public class FoulingFactorItem : IFoulingFactor, INotifyPropertyChanged, IUnit, ILiquidizable
+    public class FoulingFactorItem : IFoulingFactor, INotifyPropertyChanged, IUnit, ILiquidizable, IComparable, IComparable<FoulingFactorItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -196,5 +196,34 @@ namespace Units.Standard
         }
 
         #endregion
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is FoulingFactorItem)
+            {
+                return this.CompareTo((FoulingFactorItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(FoulingFactorItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
     }
 }

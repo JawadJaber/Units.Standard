@@ -1,9 +1,11 @@
 ﻿using DotLiquid;
+using System;
+using System.Collections;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class CapacityItem : IUnit, INotifyPropertyChanged, ICapacity, ILiquidizable
+    public class CapacityItem : IUnit, INotifyPropertyChanged, ICapacity, ILiquidizable, IComparable, IComparable<CapacityItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -203,6 +205,34 @@ namespace Units.Standard
                 ValueInTR,
 
             };
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is CapacityItem)
+            {
+                return this.CompareTo((CapacityItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(CapacityItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }

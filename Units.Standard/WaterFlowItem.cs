@@ -1,9 +1,10 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class WaterFlowItem : IUnit, IWaterFlow, INotifyPropertyChanged, ILiquidizable
+    public class WaterFlowItem : IUnit, IWaterFlow, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<WaterFlowItem>
     {
         public WaterFlowItem(double valueInGPM, double valueInMPS, double valueInLPS, string unit)
         {
@@ -209,5 +210,33 @@ namespace Units.Standard
                 ValueInM3PS
             };
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is WaterFlowItem)
+            {
+                return this.CompareTo((WaterFlowItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(WaterFlowItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
     }
 }

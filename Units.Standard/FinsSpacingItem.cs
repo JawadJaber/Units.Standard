@@ -1,9 +1,10 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class FinsSpacingItem : IFinsSpacing, INotifyPropertyChanged, IUnit, ILiquidizable
+    public class FinsSpacingItem : IFinsSpacing, INotifyPropertyChanged, IUnit, ILiquidizable, IComparable, IComparable<FinsSpacingItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -201,6 +202,34 @@ namespace Units.Standard
         }
 
         #endregion
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is FinsSpacingItem)
+            {
+                return this.CompareTo((FinsSpacingItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(FinsSpacingItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
 
     }
 }

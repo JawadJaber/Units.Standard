@@ -12,7 +12,7 @@ namespace Units.Standard
         double ValueInSqFt { get; set; }
         double ValueInSqIn { get; set; }
     }
-    public class AreaItem : IAreaItem, IUnit, ILiquidizable,INotifyPropertyChanged
+    public class AreaItem : IAreaItem, IUnit, ILiquidizable,INotifyPropertyChanged,IComparable,IComparable<AreaItem>
     {
 
         #region NotifiedPropertyChanged
@@ -202,6 +202,34 @@ namespace Units.Standard
                 default:
                     break;
             }
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is AreaItem)
+            {
+                return this.CompareTo((AreaItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(AreaItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }

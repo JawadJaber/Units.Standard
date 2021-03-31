@@ -1,9 +1,10 @@
 ﻿using DotLiquid;
+using System;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class CoilLengthItem : INotifyPropertyChanged, IUnit, ICoilLength, ILiquidizable
+    public class CoilLengthItem : INotifyPropertyChanged, IUnit, ICoilLength, ILiquidizable, IComparable, IComparable<CoilLengthItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -200,5 +201,33 @@ namespace Units.Standard
         }
 
         #endregion
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is CoilLengthItem)
+            {
+                return this.CompareTo((CoilLengthItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(CoilLengthItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
     }
 }

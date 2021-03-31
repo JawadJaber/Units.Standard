@@ -14,7 +14,7 @@ namespace Units.Standard
         string Unit { get; set; }
     }
 
-    public class DensityItem : IUnit, IDensityItem, INotifyPropertyChanged, ILiquidizable
+    public class DensityItem : IUnit, IDensityItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<DensityItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -174,6 +174,33 @@ namespace Units.Standard
                 ValueInKgPerM3,
                 ValueInLbPerFt3
             };
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is DensityItem)
+            {
+                return this.CompareTo((DensityItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(DensityItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 

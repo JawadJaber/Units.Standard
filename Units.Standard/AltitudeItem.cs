@@ -1,9 +1,11 @@
 ﻿using DotLiquid;
+using System;
+using System.Collections;
 using System.ComponentModel;
 
 namespace Units.Standard
 {
-    public class AltitudeItem : IUnit, IAltitude, INotifyPropertyChanged, ILiquidizable
+    public class AltitudeItem : IUnit, IAltitude, INotifyPropertyChanged, ILiquidizable,IComparable,IComparable<AltitudeItem>
     {
         private string _Unit { get; set; }
         public string Unit
@@ -150,6 +152,34 @@ namespace Units.Standard
                 ValueInM,
 
             };
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            if (obj is AltitudeItem)
+            {
+                return this.CompareTo((AltitudeItem)obj);
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }
+
+        public int CompareTo(AltitudeItem other)
+        {
+            if (this != null && other != null)
+            {
+                return this.Value.CompareTo(other.Value);
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
     }
