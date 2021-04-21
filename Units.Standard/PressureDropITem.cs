@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Units.Standard
@@ -313,6 +314,20 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.Pa);
+            list.Add(U.inWG);
+            list.Add(U.PSI);
+
+            return list;
+        }
+
+
+        public const string Name = nameof(PressureDropITem);
 
     }
 }

@@ -225,5 +225,18 @@ namespace Units.Standard
 
         }
 
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.Sqft_h_FPerBtu);
+            list.Add(U.SqM_CPerkW);
+           
+            return list;
+        }
+
+
+        public const string Name = nameof(FoulingFactorItem);
+
     }
 }

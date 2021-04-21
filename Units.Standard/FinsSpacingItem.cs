@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Units.Standard
@@ -230,6 +231,19 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.FPI);
+            list.Add(U.FPM);
+            list.Add(U.FPMM);
+            return list;
+        }
+
+
+        public const string Name = nameof(FinsSpacingItem);
 
     }
 }

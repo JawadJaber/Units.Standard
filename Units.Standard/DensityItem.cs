@@ -202,6 +202,20 @@ namespace Units.Standard
             }
 
         }
+
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.LbPerFt3);
+            list.Add(U.KgPerM3);
+
+            return list;
+        }
+
+
+        public const string Name = nameof(DensityItem);
     }
 
 }

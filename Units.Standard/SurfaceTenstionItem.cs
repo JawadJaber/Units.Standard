@@ -204,6 +204,19 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.DynePerCM);
+            list.Add(U.NewtonPerM);
+          
+            return list;
+        }
+
+
+        public const string Name = nameof(SurfaceTenstionItem);
     }
    
 }

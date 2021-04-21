@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Units.Standard
@@ -237,6 +238,21 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.GPM);
+            list.Add(U.LpS);
+            list.Add(U.LPS);
+            list.Add(U.M3PS);
+
+            return list;
+        }
+
+
+        public const string Name = nameof(WaterFlowItem);
 
     }
 }

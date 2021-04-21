@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Units.Standard
@@ -229,5 +230,18 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.inch);
+            list.Add(U.mm);
+            list.Add(U.m);
+            return list;
+        }
+
+
+        public const string Name = nameof(CoilLengthItem);
     }
 }

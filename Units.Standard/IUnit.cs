@@ -1,4 +1,6 @@
-﻿namespace Units.Standard
+﻿
+
+namespace Units.Standard
 {
     public interface IUnit
     {
@@ -12,7 +14,6 @@
         #endregion
 
         string ToString();
-
 
     }
 }

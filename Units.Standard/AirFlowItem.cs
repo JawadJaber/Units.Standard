@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
@@ -317,5 +318,21 @@ namespace Units.Standard
             }
 
         }
+    
+    
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.CFM);
+            list.Add(U.LpS);
+            list.Add(U.LPS);
+            list.Add(U.M3PS);
+            list.Add(U.CMH);
+            return list;
+        }
+
+
+        public const string Name = nameof(AirFlowItem);
+
     }
 }

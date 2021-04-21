@@ -231,5 +231,18 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.SqFt);
+            list.Add(U.SqM);
+            list.Add(U.SqIn);
+            return list;
+        }
+
+
+        public const string Name = nameof(AreaItem);
     }
 }

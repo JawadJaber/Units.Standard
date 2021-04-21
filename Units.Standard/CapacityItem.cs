@@ -1,6 +1,7 @@
 ﻿using DotLiquid;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Units.Standard
@@ -234,5 +235,18 @@ namespace Units.Standard
             }
 
         }
+
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.kW);
+            list.Add(U.MBH);
+            list.Add(U.TR);
+            return list;
+        }
+
+
+        public const string Name = nameof(CapacityItem);
     }
 }

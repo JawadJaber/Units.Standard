@@ -203,5 +203,18 @@ namespace Units.Standard
 
         }
 
+
+        public static List<string> GetUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.Kg);
+            list.Add(U.Lb);
+
+            return list;
+        }
+
+
+        public const string Name = nameof(WeightItem);
+
     }
 }
