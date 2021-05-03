@@ -1,0 +1,169 @@
+﻿<Window
+    x:Class="Units.Standard.Wpf.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Units.Standard.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="Auto"
+    Height="Auto"
+    d:DataContext="{d:DesignInstance Type=local:MainViewModel,
+                                     IsDesignTimeCreatable=True}"
+    mc:Ignorable="d">
+    <Grid>
+        <local:GroupBoxTemplate
+            GBBackground="Honeydew"
+            GBBrushColor="ForestGreen"
+            GBHeader="Units.Standard Test"
+            GBHeaderForground="White">
+            <local:GroupBoxTemplate.GBContentControl>
+                <UserControl>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="Capacity" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="Temperature" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="Length" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Text="Pressure" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="Air Flow" />
+                        <TextBlock
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Text="Water Flow" />
+                        <TextBlock
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Text="Weight" />
+                        <TextBlock
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Text="Area" />
+
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Capacity.Value}" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Temperature.Value}" />
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Length.Value}" />
+                        <TextBox
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Pressure.Value}" />
+                        <TextBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding AirFlow.Value}" />
+                        <TextBox
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding WaterFlow.Value}" />
+                        <TextBox
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Weight.Value}" />
+                        <TextBox
+                            Grid.Row="7"
+                            Grid.Column="1"
+                            Margin="1"
+                            Text="{Binding Area.Value}" />
+
+
+                        <ComboBox
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.CapacityUnits}"
+                            SelectedItem="{Binding Capacity.Unit}" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.TempUnits}"
+                            SelectedItem="{Binding Temperature.Unit}" />
+                        <ComboBox
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.LengthUnits}"
+                            SelectedItem="{Binding Length.Unit}" />
+                        <ComboBox
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.PressureUnits}"
+                            SelectedItem="{Binding Pressure.Unit}" />
+                        <ComboBox
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.AirFlowUnits}"
+                            SelectedItem="{Binding AirFlow.Unit}" />
+                        <ComboBox
+                            Grid.Row="5"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.WaterFlowUnits}"
+                            SelectedItem="{Binding WaterFlow.Unit}" />
+                        <ComboBox
+                            Grid.Row="6"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.WeightUnits}"
+                            SelectedItem="{Binding Weight.Unit}" />
+                        <ComboBox
+                            Grid.Row="7"
+                            Grid.Column="2"
+                            Margin="1"
+                            ItemsSource="{x:Static local:MainViewModel.AreaUnits}"
+                            SelectedItem="{Binding Area.Unit}" />
+
+                    </Grid>
+                </UserControl>
+            </local:GroupBoxTemplate.GBContentControl>
+        </local:GroupBoxTemplate>
+    </Grid>
+</Window>
