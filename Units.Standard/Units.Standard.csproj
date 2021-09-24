@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.19.1</Version>
+    <Version>1.0.22.1</Version>
     <Product>Units.Standard</Product>
     <Description>Standard library that is can be used friendly with Wpf and MVVM environments.</Description>
     <PackageId>Units.Standard</PackageId>
@@ -16,12 +16,16 @@ Create from same added
 Compare methods added to velocityitem
 IComparable added to all items
 Added GetUnits, Name static methods and property
-ExtensionMethods added</PackageReleaseNotes>
+ExtensionMethods added
+</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <FileVersion>1.0.19.1</FileVersion>
+    <FileVersion>1.0.22.1</FileVersion>
     <Company>Jawad S. Jaber</Company>
-    <AssemblyVersion>1.0.19.1</AssemblyVersion>
+    <AssemblyVersion>1.0.22.1</AssemblyVersion>
     <Authors>Jawad S. Jaber</Authors>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Jawad_S_Jaber.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,8 +15,14 @@ namespace Units.Standard
         string Unit { get; set; }
     }
 
+
+    public interface IDefaultParameter
+    {
+        string DefaultParameter { get; set; }
+    }
+
     [Serializable]
-    public class VelocityItem : IUnit, IVelocityItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<VelocityItem>
+    public class VelocityItem : IUnit, IVelocityItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<VelocityItem>, IDefaultParameter
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -172,20 +178,29 @@ namespace Units.Standard
             this.Unit = unit;
         }
 
-        private VelocityItem()
+        protected VelocityItem()
         {
 
         }
 
-        private VelocityItem(double value, string unit)
+        protected VelocityItem(double value, string unit)
         {
             Unit = unit;
             Value = value;
         }
 
+        protected VelocityItem(double value, string unit, string parameter)
+        {
+            Unit = unit;
+            Value = value;
+            DefaultParameter = parameter;
+        }
+
         public static class Factory
         {
             public static VelocityItem Create(double value, string unit) { return new VelocityItem(value, unit); }
+
+            public static VelocityItem Create(double value, string unit, string parameter) { return new VelocityItem(value, unit, parameter); }
         }
 
 
@@ -207,6 +222,14 @@ namespace Units.Standard
 
         public override string ToString()
         {
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
+            {
+                if(Value == 0)
+                {
+                    return DefaultParameter;
+                }
+            }
+
             return $"{Value.ToString("N2")} {Unit}";
         }
 
@@ -250,5 +273,32 @@ namespace Units.Standard
 
         public const string Name = nameof(VelocityItem);
 
+
+        #region IDefaultParameter
+
+
+
+        private string _DefaultParameter { get; set; } = string.Empty;
+        public string DefaultParameter
+        {
+            get
+            {
+                return _DefaultParameter;
+            }
+            set
+            {
+                if (_DefaultParameter == value)
+                    return;
+                _DefaultParameter = value;
+                OnPropertyChanged(nameof(DefaultParameter));
+            }
+        }
+
+
+        #endregion
     }
+
+
+
+
 }
