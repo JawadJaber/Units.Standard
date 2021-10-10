@@ -216,6 +216,8 @@ namespace Units.Standard
 
 
         public const string Name = nameof(DensityItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 
 }

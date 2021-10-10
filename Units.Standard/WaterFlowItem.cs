@@ -254,5 +254,7 @@ namespace Units.Standard
 
         public const string Name = nameof(WaterFlowItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
     }
 }

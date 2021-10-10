@@ -207,6 +207,8 @@ namespace Units.Standard
 
         public const string Name = nameof(TemperatureItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
     }
 }
 

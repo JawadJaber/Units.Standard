@@ -245,5 +245,7 @@ namespace Units.Standard
 
         public const string Name = nameof(FinsSpacingItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
     }
 }

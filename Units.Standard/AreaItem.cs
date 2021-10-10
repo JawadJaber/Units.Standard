@@ -244,5 +244,7 @@ namespace Units.Standard
 
 
         public const string Name = nameof(AreaItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 }

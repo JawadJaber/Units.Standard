@@ -27,6 +27,7 @@ namespace Units.Standard
         public const string kPa = "kPa";
         public const string Pa = "Pa";
         public const string PSI = "PSI";
+        public const string Bar = "Bar";
         public const string inWG = "inWG";
         public const string SqM_CPerkW = "m²°C/kW";
         public const string Sqft_h_FPerBtu = "ft²h°F/Btu";

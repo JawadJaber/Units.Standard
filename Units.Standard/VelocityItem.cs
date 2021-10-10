@@ -273,6 +273,8 @@ namespace Units.Standard
 
         public const string Name = nameof(VelocityItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
 
         #region IDefaultParameter
 

@@ -7,6 +7,7 @@
         double ValueInFtWG { get; set; }
         double ValueInKPa { get; set; }
         double ValueInPSI { get; set; }
+        double ValueInBar { get; set; }
         string Unit { get; set; }
     }
 }

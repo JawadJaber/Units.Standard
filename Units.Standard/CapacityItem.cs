@@ -248,5 +248,7 @@ namespace Units.Standard
 
 
         public const string Name = nameof(CapacityItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 }

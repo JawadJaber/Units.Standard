@@ -243,5 +243,7 @@ namespace Units.Standard
 
 
         public const string Name = nameof(CoilLengthItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 }

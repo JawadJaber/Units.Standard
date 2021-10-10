@@ -195,5 +195,7 @@ namespace Units.Standard
 
         public const string Name = nameof(AltitudeItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
     }
 }

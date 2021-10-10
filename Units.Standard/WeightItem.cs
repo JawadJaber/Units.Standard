@@ -216,5 +216,6 @@ namespace Units.Standard
 
         public const string Name = nameof(WeightItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 }

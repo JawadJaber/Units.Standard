@@ -236,6 +236,9 @@ namespace Units.Standard
         }
 
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
+
         public const string Name = nameof(FoulingFactorItem);
 
     }

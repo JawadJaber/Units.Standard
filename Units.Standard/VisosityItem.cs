@@ -216,5 +216,7 @@ namespace Units.Standard
 
 
         public const string Name = nameof(ViscosityItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
 }

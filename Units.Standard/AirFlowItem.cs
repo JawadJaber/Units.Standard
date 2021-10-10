@@ -334,5 +334,7 @@ namespace Units.Standard
 
         public const string Name = nameof(AirFlowItem);
 
+        public static List<string> AllUnits { get; set; } = GetUnits();
+
     }
 }

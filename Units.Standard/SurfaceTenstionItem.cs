@@ -217,6 +217,8 @@ namespace Units.Standard
 
 
         public const string Name = nameof(SurfaceTenstionItem);
+
+        public static List<string> AllUnits { get; set; } = GetUnits();
     }
    
 }
