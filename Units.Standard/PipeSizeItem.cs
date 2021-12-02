@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -54,9 +55,9 @@ namespace Units.Standard
             list.Add(new PipeSizeTableItem() { ValueInMM = "850", ValueInInch = "34" });
             list.Add(new PipeSizeTableItem() { ValueInMM = "900", ValueInInch = "36" });
             list.Add(new PipeSizeTableItem() { ValueInMM = "950", ValueInInch = "38" });
-          
-            
-            
+
+
+
             return list;
         }
 
@@ -65,7 +66,7 @@ namespace Units.Standard
             var list = new List<string>();
             list.Add(U.mm);
             list.Add(U.inch);
-          
+
             return list;
         }
 
@@ -76,7 +77,7 @@ namespace Units.Standard
 
     }
 
-    public class PipeSizeItem: IPipeSizeItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<PipeSizeItem>
+    public class PipeSizeItem : IPipeSizeItem, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<PipeSizeItem>
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -93,7 +94,7 @@ namespace Units.Standard
 
         #endregion
 
-      
+
         #region IUnit
 
         private string _Unit { get; set; }
@@ -179,7 +180,7 @@ namespace Units.Standard
             {
                 Value = ValueInInch;
             }
-           
+
 
         }
 
@@ -197,7 +198,7 @@ namespace Units.Standard
                 ValueInInch = valueInInch;
                 ValueInMM = PipeSizeTableItem.AllData.Where(x => x.ValueInInch == valueInInch).FirstOrDefault()?.ValueInMM;
             }
-            
+
         }
 
         public object ToLiquid()
@@ -215,7 +216,7 @@ namespace Units.Standard
         public int CompareTo(object obj)
         {
             var obj_cast = obj as PipeSizeItem;
-            if(obj_cast != null)
+            if (obj_cast != null)
             {
                 return CompareTo(obj_cast);
             }
@@ -227,7 +228,7 @@ namespace Units.Standard
 
         public int CompareTo(PipeSizeItem other)
         {
-            if(this.ValueInInch == other.ValueInInch || this.ValueInMM == other.ValueInMM)
+            if (this.ValueInInch == other.ValueInInch || this.ValueInMM == other.ValueInMM)
             {
                 return 1;
             }
@@ -237,6 +238,30 @@ namespace Units.Standard
             }
 
         }
+
+        #endregion
+
+        #region Construction
+
+        public static class Factory
+        {
+            public static PipeSizeItem Create(string value, string unit) { return new PipeSizeItem(value, unit); }
+        }
+
+
+
+        public PipeSizeItem()
+        {
+
+        }
+
+        public PipeSizeItem(string value, string unit)
+        {
+            Unit = unit;
+            Value = value;
+        }
+
+
 
         #endregion
 
@@ -253,6 +278,50 @@ namespace Units.Standard
 
         public static List<string> AllUnits { get; set; } = GetUnits();
 
+
+        public static PipeSizeItem Create(PipeSizeItem item)
+        {
+            return PipeSizeItem.Factory.Create(item.Value, item.Unit);
+        }
+
+        public override string ToString()
+        {
+            return Value + " " + Unit;
+        }
+
+        public static PipeSizeItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = PipeSizeTableItem.AllData.Where(xi => xi.ValueInMM == s || xi.ValueInInch == s).FirstOrDefault();
+            if (dValue != null)
+            {
+                var ss_value = PipeSizeTableItem.AllData.Where(xi => xi.ValueInMM == s).FirstOrDefault();
+                if (ss_value != null)
+                {
+                    return Factory.Create(ss_value.ValueInMM, U.mm);
+                }
+                else
+                {
+                    return Factory.Create(ss_value.ValueInInch, U.inch);
+                }
+
+                
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return Factory.Create(s, U.mm);
+                }
+
+                return Factory.Create(PipeSizeTableItem.AllData.First().ValueInMM, U.mm);
+            }
+        }
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -196,6 +197,35 @@ namespace Units.Standard
         public const string Name = nameof(AltitudeItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public static AltitudeItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return AltitudeItem.Factory.Create(r, U.m);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return AltitudeItem.Factory.Create(v, U.m);
+                }
+
+                return AltitudeItem.Factory.Create(0, U.m);
+            }
+        }
 
     }
 }

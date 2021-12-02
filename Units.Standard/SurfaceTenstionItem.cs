@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -219,6 +220,35 @@ namespace Units.Standard
         public const string Name = nameof(SurfaceTenstionItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public static SurfaceTenstionItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return Factory.Create(r, U.NewtonPerM);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return Factory.Create(v, U.NewtonPerM);
+                }
+
+                return Factory.Create(0, U.NewtonPerM);
+            }
+        }
     }
    
 }

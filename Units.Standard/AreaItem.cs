@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -246,5 +247,35 @@ namespace Units.Standard
         public const string Name = nameof(AreaItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+
+        public static AreaItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return AreaItem.Factory.Create(r, U.SqM);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return AreaItem.Factory.Create(v, U.SqM);
+                }
+
+                return AreaItem.Factory.Create(0, U.SqM);
+            }
+        }
     }
 }

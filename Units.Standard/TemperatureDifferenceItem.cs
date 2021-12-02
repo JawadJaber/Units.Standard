@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -215,5 +216,33 @@ namespace Units.Standard
 
         public const string Name = nameof(TemperatureDifferenceItem);
 
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public static TemperatureDifferenceItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return Factory.Create(r, U.C);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return Factory.Create(v, U.C);
+                }
+
+                return Factory.Create(0, U.C);
+            }
+        }
     }
 }

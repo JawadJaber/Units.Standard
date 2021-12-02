@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -386,5 +387,34 @@ namespace Units.Standard
 
         public const string Name = nameof(PressureDropITem);
 
+
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public static PressureDropITem Parse(string s, IFormatProvider formatProvider)//default value to be added to distinquish between water and air pressure drops,,, same as air flow item.
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return Factory.Create(r, U.kPa);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return Factory.Create(v, U.kPa);
+                }
+
+                return Factory.Create(0, U.kPa);
+            }
+        }
     }
 }

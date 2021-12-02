@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
@@ -247,5 +248,33 @@ namespace Units.Standard
 
         public static List<string> AllUnits { get; set; } = GetUnits();
 
+        public override string ToString()
+        {
+            return Value.ToString("N0") + " " + Unit;
+        }
+
+        public static FinsSpacingItem Parse(string s, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            if (dValue)
+            {
+                return Factory.Create(r, U.FPM);
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    return Factory.Create(v, U.FPM);
+                }
+
+                return Factory.Create(0, U.FPM);
+            }
+        }
     }
 }
