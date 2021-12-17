@@ -59,6 +59,17 @@ namespace Units.Standard
             return LengthInInch * 0.0254;
         }
 
+
+        public static double ConvertLengthFrom_MM_To_Mils(double LengthInMM)
+        {
+            return LengthInMM / 0.0254;
+        }
+
+        public static double ConvertLengthFrom_Mils_To_MM(double LengthInMils)
+        {
+            return LengthInMils * 0.0254;
+        }
+
         public static double ConvertLengthFrom_M_To_Ft(double LengthInM)
         {
             return LengthInM / 0.3048;
@@ -245,7 +256,17 @@ namespace Units.Standard
         }
 
 
-      
+
+        public static double ConvertSpeedFrom_InchPerSec_To_MMPS(double inch_p_sec)
+        {
+            return inch_p_sec * 25.4;
+        }
+
+
+        public static double ConvertSpeedFrom_MMPS_To_InchPerSec(double mm_ps)
+        {
+            return mm_ps / 25.4;
+        }
 
 
         public static double ConvertWeightFrom_KG_To_LB(double kg)

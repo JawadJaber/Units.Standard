@@ -34,4 +34,8 @@ AllUnits static property added to all properties</PackageReleaseNotes>
     <PackageReference Include="DotLiquid" Version="2.2.580" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\StdHelpers\StdHelpers\StdHelpers\StdHelpers.csproj" />
+  </ItemGroup>
+
 </Project>

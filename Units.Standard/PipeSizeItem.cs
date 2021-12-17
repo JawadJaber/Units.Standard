@@ -24,9 +24,9 @@ namespace Units.Standard
         public static List<PipeSizeTableItem> GetData()
         {
             var list = new List<PipeSizeTableItem>(); ;
-            list.Add(new PipeSizeTableItem() { ValueInMM = "6", ValueInInch = "1/8" });
-            list.Add(new PipeSizeTableItem() { ValueInMM = "8", ValueInInch = "1/4" });
-            list.Add(new PipeSizeTableItem() { ValueInMM = "10", ValueInInch = "3/8" });
+            //list.Add(new PipeSizeTableItem() { ValueInMM = "6", ValueInInch = "1/8" });
+            //list.Add(new PipeSizeTableItem() { ValueInMM = "8", ValueInInch = "1/4" });
+            //list.Add(new PipeSizeTableItem() { ValueInMM = "10", ValueInInch = "3/8" });
             list.Add(new PipeSizeTableItem() { ValueInMM = "15", ValueInInch = "1/2" });
             list.Add(new PipeSizeTableItem() { ValueInMM = "20", ValueInInch = "3/4" });
             list.Add(new PipeSizeTableItem() { ValueInMM = "25", ValueInInch = "1" });
@@ -127,6 +127,22 @@ namespace Units.Standard
                     return;
                 _Value = value;
                 OnPropertyChanged(nameof(Value));
+                if(Value != null)
+                {
+                    if (Value.Contains(U.mm))
+                    {
+                        Value = Value.Replace(U.mm, "");
+                        Value = Value.Replace(" ", "");
+                    }
+
+                    if (Value.Contains(U.inch))
+                    {
+                        Value = Value.Replace(U.inch, "");
+                        Value = Value.Replace(" ", "");
+                    }
+                }
+              
+
                 UpdateWhenValueChanged();
             }
         }

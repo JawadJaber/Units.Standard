@@ -10,6 +10,7 @@ namespace Units.Standard
         public const string ft = "ft";
         public const string m = "m";
         public const string inch = "in";
+        public const string mils = "mils";
         public const string mm = "mm";
         public const string F = "°F";
         public const string C = "°C";
@@ -46,6 +47,9 @@ namespace Units.Standard
         public const string KgPerMS = "Kg/m-s";
         public const string cP = "cP";
         public const string FtPerMin = "ft/min";
+        
+        public const string MMPerSec = "mm/s";
+        public const string InchPerSec = "inches/s";
 
 
         public const string NewtonPerM = "N/m";

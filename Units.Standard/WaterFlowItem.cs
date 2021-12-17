@@ -259,7 +259,7 @@ namespace Units.Standard
 
         public override string ToString()
         {
-            return Value.ToString("N0") + " " + Unit;
+            return Value.ToString("N2") + " " + Unit;
         }
 
 
