@@ -135,7 +135,6 @@ namespace Units.Standard
                 ValueInMM = Converter.ConvertLengthFrom_Mils_To_MM(valueInMils);
                 
             }
-            
             else
             {
                 double valueInMM = Value;
@@ -231,7 +230,7 @@ namespace Units.Standard
 
         public override string ToString()
         {
-            return Value.ToString("N0") + " " + Unit;
+            return Value.ToDouble_SigFig(2) + " " + Unit;
         }
 
 

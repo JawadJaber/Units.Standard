@@ -210,7 +210,7 @@ namespace Units.Standard
                 }
             }
 
-            return $"{Value.ToString("N2")} {Unit}";
+            return $"{Value.ToDouble_SigFig(2)} {Unit}";
         }
 
 
