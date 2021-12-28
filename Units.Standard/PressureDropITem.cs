@@ -324,7 +324,7 @@ namespace Units.Standard
             return new
             {
                 Unit,
-                Value = Value.ToString("N2"),
+                Value = Value.ToString("N1"),
                 ValueInInWG,
                 ValueInPa,
                 ValueInPSI,
@@ -392,8 +392,8 @@ namespace Units.Standard
 
         public override string ToString()
         {
-             return Value.ToSignificantDigits(2) + " " + Unit;
-            // return Value.ToString("N2") + " " + Unit;
+             //return Value.ToSignificantDigits(2) + " " + Unit;
+             return Value.ToString("N1") + " " + Unit;
         }
 
         public static PressureDropITem Parse(string s, IFormatProvider formatProvider)//default value to be added to distinquish between water and air pressure drops,,, same as air flow item.
