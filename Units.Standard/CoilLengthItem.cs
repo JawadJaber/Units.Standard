@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -276,5 +277,59 @@ namespace Units.Standard
                 return Factory.Create(0, U.mm);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "DimUnit";
+
+        public static CoilLengthItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return CoilLengthItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return CoilLengthItem.Factory.Create(r, U.mm);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return CoilLengthItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return CoilLengthItem.Factory.Create(v, U.mm);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return CoilLengthItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return CoilLengthItem.Factory.Create(0, U.mm);
+                }
+
+
+            }
+        }
+
     }
 }

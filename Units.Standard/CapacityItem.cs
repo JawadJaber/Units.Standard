@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -281,5 +282,60 @@ namespace Units.Standard
                 return Factory.Create(0, U.TR);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "CapacityUnit";
+
+        public static CapacityItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return CapacityItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return CapacityItem.Factory.Create(r, U.LpS);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return CapacityItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return CapacityItem.Factory.Create(v, U.TR);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return CapacityItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return CapacityItem.Factory.Create(0, U.TR);
+                }
+
+
+            }
+        }
+
+
     }
 }

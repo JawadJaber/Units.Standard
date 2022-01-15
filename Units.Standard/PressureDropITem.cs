@@ -419,6 +419,66 @@ namespace Units.Standard
                 return Factory.Create(0, U.kPa);
             }
         }
+
+
+
+        public static string OwnerUnitPropertyName = "PressureDropUnit";
+
+        public static PressureDropITem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (string.IsNullOrWhiteSpace(unit))
+            {
+                unit = hashable.GetHashableUnit("Water"+OwnerUnitPropertyName);
+            }
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return PressureDropITem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return PressureDropITem.Factory.Create(r, U.kPa);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return PressureDropITem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return PressureDropITem.Factory.Create(v, U.kPa);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return PressureDropITem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return PressureDropITem.Factory.Create(0, U.kPa);
+                }
+
+
+            }
+        }
+
     }
 
 

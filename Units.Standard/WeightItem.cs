@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -245,5 +246,58 @@ namespace Units.Standard
                 return Factory.Create(0, U.Kg);
             }
         }
+
+        public static string OwnerUnitPropertyName = "WeightUnit";
+
+        public static WeightItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return WeightItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return WeightItem.Factory.Create(r, U.Kg);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return WeightItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return WeightItem.Factory.Create(v, U.Kg);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return WeightItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return WeightItem.Factory.Create(0, U.Kg);
+                }
+
+
+            }
+        }
+
     }
 }

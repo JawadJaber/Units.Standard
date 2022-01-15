@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -257,5 +258,59 @@ namespace Units.Standard
                 return Factory.Create(0, U.mm);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "VibrationDisplacementUnit";
+
+        public static VibrationDisplacementItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return VibrationDisplacementItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return VibrationDisplacementItem.Factory.Create(r, U.mm);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return VibrationDisplacementItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return VibrationDisplacementItem.Factory.Create(v, U.mm);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return VibrationDisplacementItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return VibrationDisplacementItem.Factory.Create(0, U.mm);
+                }
+
+
+            }
+        }
+
     }
 }

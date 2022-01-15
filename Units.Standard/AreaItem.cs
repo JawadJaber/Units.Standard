@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -277,5 +278,59 @@ namespace Units.Standard
                 return AreaItem.Factory.Create(0, U.SqM);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "AreaUnit";
+
+        public static AreaItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AreaItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return AreaItem.Factory.Create(r, U.LpS);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return AreaItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return AreaItem.Factory.Create(v, U.SqM);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AreaItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return AreaItem.Factory.Create(0, U.SqM);
+                }
+
+
+            }
+        }
+
     }
 }

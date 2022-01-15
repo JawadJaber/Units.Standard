@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -249,6 +250,60 @@ namespace Units.Standard
                 return Factory.Create(0, U.NewtonPerM);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "PressureDropUnit";
+
+        public static SurfaceTenstionItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return SurfaceTenstionItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return SurfaceTenstionItem.Factory.Create(r, U.NewtonPerM);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return SurfaceTenstionItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return SurfaceTenstionItem.Factory.Create(v, U.NewtonPerM);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return SurfaceTenstionItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return SurfaceTenstionItem.Factory.Create(0, U.NewtonPerM);
+                }
+
+
+            }
+        }
+
     }
-   
+
 }

@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -226,6 +227,60 @@ namespace Units.Standard
                 return AltitudeItem.Factory.Create(0, U.m);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "AltitudeUnit";
+
+        public static AltitudeItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AltitudeItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return AltitudeItem.Factory.Create(r, U.m);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return AltitudeItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return AltitudeItem.Factory.Create(v, U.m);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AltitudeItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return AltitudeItem.Factory.Create(0, U.m);
+                }
+
+
+            }
+        }
+
 
     }
 }

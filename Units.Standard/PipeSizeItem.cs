@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -337,6 +338,61 @@ namespace Units.Standard
 
                 return Factory.Create(PipeSizeTableItem.AllData.First().ValueInMM, U.mm);
             }
+        }
+
+
+
+        public static string OwnerUnitPropertyName = "PipeSizingUnit";
+
+        public static PipeSizeItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+
+            var dValue = PipeSizeTableItem.AllData.Where(xi => xi.ValueInMM == s || xi.ValueInInch == s).FirstOrDefault();
+            if (dValue != null)
+            {
+                var ss_value = PipeSizeTableItem.AllData.Where(xi => xi.ValueInMM == s).FirstOrDefault();
+                if (ss_value != null)
+                {
+                    return Factory.Create(ss_value.ValueInMM, U.mm);
+                }
+                else
+                {
+                    return Factory.Create(ss_value.ValueInInch, U.inch);
+                }
+
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+
+                    var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return PipeSizeItem.Factory.Create(s, unit);
+                    }
+                    else
+                    {
+                        return PipeSizeItem.Factory.Create(s, U.mm);
+                    }
+
+                  
+                }
+
+                return Factory.Create(PipeSizeTableItem.AllData.First().ValueInMM, U.mm);
+            }
+
+
+
+          
         }
 
     }

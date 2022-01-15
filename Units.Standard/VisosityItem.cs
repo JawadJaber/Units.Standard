@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -246,6 +247,60 @@ namespace Units.Standard
                 return Factory.Create(0, U.KgPerMS);
             }
         }
+
+
+        public static string OwnerUnitPropertyName = "ViscosityUnit";
+
+        public static ViscosityItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return ViscosityItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return ViscosityItem.Factory.Create(r, U.KgPerMS);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return ViscosityItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return ViscosityItem.Factory.Create(v, U.KgPerMS);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return ViscosityItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return ViscosityItem.Factory.Create(0, U.KgPerMS);
+                }
+
+
+            }
+        }
+
 
     }
 }
