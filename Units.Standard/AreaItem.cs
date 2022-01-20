@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using Newtonsoft.Json;
 using StdHelpers;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,10 @@ namespace Units.Standard
 
 
 
-        private string _Unit { get; set; } = string.Empty;
+        [JsonProperty("Unit")]
+        private string _Unit { get; set; }
+
+        [JsonIgnore]
         public string Unit
         {
             get
@@ -113,8 +117,10 @@ namespace Units.Standard
             }
         }
 
+        [JsonProperty("Value")]
+        private double _Value { get; set; }
 
-        private double _Value { get; set; } = 0;
+        [JsonIgnore]
         public double Value
         {
             get
@@ -130,6 +136,7 @@ namespace Units.Standard
                 UpdateWhenValueChanged();
             }
         }
+
 
 
 

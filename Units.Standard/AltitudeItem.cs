@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using Newtonsoft.Json;
 using StdHelpers;
 using System;
 using System.Collections;
@@ -10,7 +11,10 @@ namespace Units.Standard
 {
     public class AltitudeItem : IUnit, IAltitude, INotifyPropertyChanged, ILiquidizable,IComparable,IComparable<AltitudeItem>
     {
+        [JsonProperty("Unit")]
         private string _Unit { get; set; }
+
+        [JsonIgnore]
         public string Unit
         {
             get
@@ -27,7 +31,10 @@ namespace Units.Standard
             }
         }
 
+        [JsonProperty("Value")]
         private double _Value { get; set; }
+
+        [JsonIgnore]
         public double Value
         {
             get
@@ -43,6 +50,7 @@ namespace Units.Standard
                 UpdateWhenValueChanged();
             }
         }
+
 
         public void UpdateWhenUnitChanged()
         {
