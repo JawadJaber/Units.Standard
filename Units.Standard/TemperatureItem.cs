@@ -8,6 +8,12 @@ using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
+
+    public interface IComment
+    {
+        string Comment { get; set; }
+    }
+
     public class TemperatureItem : IUnit, ITemperature, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<TemperatureItem>
     {
         #region NotifiedPropertyChanged
@@ -221,7 +227,7 @@ namespace Units.Standard
 
         public override string ToString()
         {
-            return Value.ToString("N0") + " " + Unit;
+            return Value.ToString("N1") + " " + Unit;
         }
 
         public static TemperatureItem Parse(string s, IFormatProvider formatProvider)
@@ -234,7 +240,7 @@ namespace Units.Standard
             }
             else
             {
-                Regex regex = new Regex(@"\d+");
+                Regex regex = new Regex(@"\d+(.)?\d+");
                 Match match = regex.Match(s);
 
                 var isNumber = double.TryParse(match.Value, out double v);
@@ -271,7 +277,7 @@ namespace Units.Standard
             }
             else
             {
-                Regex regex = new Regex(@"\d+");
+                Regex regex = new Regex(@"\d+(.)?\d+");
                 Match match = regex.Match(s);
 
                 var isNumber = double.TryParse(match.Value, out double v);
@@ -300,6 +306,25 @@ namespace Units.Standard
 
             }
         }
+
+
+
+        private string _Comment { get; set; } = string.Empty;
+        public string Comment
+        {
+            get
+            {
+                return _Comment;
+            }
+            set
+            {
+                if (_Comment == value)
+                    return;
+                _Comment = value;
+                OnPropertyChanged(nameof(Comment));
+            }
+        }
+
 
     }
 

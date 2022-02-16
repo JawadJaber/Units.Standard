@@ -414,7 +414,7 @@ namespace Units.Standard
             }
             else
             {
-                Regex regex = new Regex(@"\d+");
+                Regex regex = new Regex(@"\d+(.)?\d+");
                 Match match = regex.Match(s);
 
                 var isNumber = double.TryParse(match.Value, out double v);
@@ -457,7 +457,7 @@ namespace Units.Standard
             }
             else
             {
-                Regex regex = new Regex(@"\d+");
+                Regex regex = new Regex(@"\d+(.)?\d+");
                 Match match = regex.Match(s);
 
                 var isNumber = double.TryParse(match.Value, out double v);
