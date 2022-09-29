@@ -4,6 +4,7 @@ using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Units.Standard
@@ -36,12 +37,12 @@ namespace Units.Standard
 
         }
 
-        private WaterFlowItem()
+        public WaterFlowItem()
         {
 
         }
 
-        private WaterFlowItem(double value, string unit)
+        public WaterFlowItem(double value, string unit)
         {
             Unit = unit;
             Value = value;
@@ -268,7 +269,16 @@ namespace Units.Standard
 
         public override string ToString()
         {
-            return Value.ToString("N2") + " " + Unit;
+            if (Unit == U.M3PS)
+            {
+
+                return Value.ToString("N5") + " " + Unit;
+            }
+            else
+            {
+                return Value.ToString("N2") + " " + Unit;
+
+            }
         }
 
 
@@ -346,6 +356,29 @@ namespace Units.Standard
             }
         }
 
+        [JsonProperty("StringValue")]
+        private string _StringValue { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string StringValue
+        {
+            get
+            {
+                return _StringValue;
+            }
+            set
+            {
+                if (_StringValue == value)
+                    return;
+                _StringValue = value;
+                OnPropertyChanged(nameof(StringValue));
+                this.UpdateValueWhenStringValueChanged("");
+            }
+        }
 
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            this.StringValue = Value.ToString();
+        }
     }
 }

@@ -4,6 +4,7 @@ using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Units.Standard
@@ -129,10 +130,28 @@ namespace Units.Standard
                 _Value = value;
                 OnPropertyChanged(nameof(Value));
                 UpdateWhenValueChanged();
+
             }
         }
 
-
+        [JsonProperty("StringValue")]
+        private string _StringValue { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string StringValue
+        {
+            get
+            {
+                return _StringValue;
+            }
+            set
+            {
+                if (_StringValue == value)
+                    return;
+                _StringValue = value;
+                OnPropertyChanged(nameof(StringValue));
+                this.UpdateValueWhenStringValueChanged("");
+            }
+        }
 
         #endregion
 
@@ -218,6 +237,8 @@ namespace Units.Standard
         {
             Unit = U.LpS;
             Value = 0;
+
+
         }
 
         public AirFlowItem(double valueInCFM, double valueInMPS, double valueInCMH, double valueInLPS, string unit)
@@ -323,6 +344,9 @@ namespace Units.Standard
                 ValueInLPS = Converter.ConvertAirFlowFrom_M3PS_To_LPS(valueInMPS);
                 ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(valueInMPS);
             }
+
+
+            
         }
 
         public static class Factory
@@ -398,6 +422,13 @@ namespace Units.Standard
         public const string Name = nameof(AirFlowItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+
+
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            this.StringValue = Value.ToString();
+        }
 
     }
 }

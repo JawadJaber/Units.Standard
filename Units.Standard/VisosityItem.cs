@@ -4,6 +4,7 @@ using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -309,6 +310,29 @@ namespace Units.Standard
             }
         }
 
+        [JsonProperty("StringValue")]
+        private string _StringValue { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string StringValue
+        {
+            get
+            {
+                return _StringValue;
+            }
+            set
+            {
+                if (_StringValue == value)
+                    return;
+                _StringValue = value;
+                OnPropertyChanged(nameof(StringValue));
+                this.UpdateValueWhenStringValueChanged("");
+            }
+        }
 
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            this.StringValue = Value.ToString();
+        }
     }
 }

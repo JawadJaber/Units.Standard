@@ -4,6 +4,7 @@ using StdHelpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -15,6 +16,8 @@ namespace Units.Standard
         double ValueInMPS { get; set; }
 
         string Unit { get; set; }
+
+       
     }
 
 
@@ -106,8 +109,33 @@ namespace Units.Standard
                 _Value = value;
                 OnPropertyChanged(nameof(Value));
                 UpdateWhenValueChanged();
+
             }
         }
+
+
+
+
+
+        [JsonProperty("StringValue")]
+        private string _StringValue { get; set; }
+        [JsonIgnore]
+        public string StringValue
+        {
+            get
+            {
+                return _StringValue;
+            }
+            set
+            {
+                if (_StringValue == value)
+                    return;
+                _StringValue = value;
+                OnPropertyChanged(nameof(StringValue));
+                this.UpdateValueWhenStringValueChanged(this.DefaultParameter);
+            }
+        }
+
 
         private double _ValueInLbPerFt3 { get; set; }
         public double ValueInFtPerMin
@@ -359,8 +387,12 @@ namespace Units.Standard
 
         #endregion
 
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            this.StringValue = Value.ToString();
+        }
 
-       
     }
 
 
