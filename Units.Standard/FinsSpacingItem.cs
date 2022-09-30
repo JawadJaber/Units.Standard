@@ -173,6 +173,8 @@ namespace Units.Standard
                 default:
                     break;
             }
+
+          
         }
 
 
@@ -186,6 +188,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
 

@@ -80,6 +80,8 @@ namespace Units.Standard
                 ValueInFt = valueInFt;
                 ValueInM = Converter.ConvertLengthFrom_Ft_To_M(valueInFt);
             }
+
+          
         }
 
         private double _ValueInM { get; set; }
@@ -125,7 +127,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
-
+            StringValue = value.ToString();
         }
 
         public static class Factory

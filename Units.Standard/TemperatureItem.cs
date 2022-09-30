@@ -54,6 +54,8 @@ namespace Units.Standard
                 ValueInC = valueInC;
                 ValueInF = Converter.ConvertTempFrom_C_To_F(valueInC);
             }
+
+            
         }
 
 
@@ -160,6 +162,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory

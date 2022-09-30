@@ -58,6 +58,8 @@ namespace Units.Standard
                 ValueInNewtonPerM = valueInC;
                 ValueInDynePerCM = Converter.ConvertDensityFrom_NewtonPerM_To_DynePerCM(valueInC);
             }
+
+          
         }
 
 
@@ -164,6 +166,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory

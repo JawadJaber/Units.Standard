@@ -57,6 +57,8 @@ namespace Units.Standard
                 ValueInKg = valueInKG;
                 ValueInLb = Converter.ConvertWeightFrom_KG_To_LB(valueInKG);
             }
+
+           
         }
 
 
@@ -162,6 +164,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory

@@ -36,6 +36,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
 
@@ -128,6 +129,8 @@ namespace Units.Standard
                 ValueInC = valueInC;
                 ValueInF = Converter.ConvertTempDifferenceFrom_deltaC_To_deltaF(valueInC);
             }
+
+           
         }
 
 

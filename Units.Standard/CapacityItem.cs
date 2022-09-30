@@ -64,6 +64,8 @@ namespace Units.Standard
                 ValueInKW = Converter.ConvertCapacityFrom_TR_To_KW(valueInTR);
                 ValueInMBH = Converter.ConvertCapacityFrom_KW_To_MBH(Converter.ConvertCapacityFrom_TR_To_KW(valueInTR));
             }
+
+           
         }
 
         [JsonProperty("Unit")]
@@ -193,6 +195,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory

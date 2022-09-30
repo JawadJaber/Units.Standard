@@ -231,6 +231,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         protected VibrationVelocityItem(double value, string unit, string parameter)
@@ -238,6 +239,7 @@ namespace Units.Standard
             Unit = unit;
             Value = value;
             DefaultParameter = parameter;
+            StringValue = value.ToString();
         }
 
         public static class Factory

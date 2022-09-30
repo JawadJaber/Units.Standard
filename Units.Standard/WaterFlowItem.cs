@@ -46,6 +46,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory
@@ -192,6 +193,8 @@ namespace Units.Standard
                 ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(valueInMPS);
                 ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(valueInMPS);
             }
+
+           
 
         }
 

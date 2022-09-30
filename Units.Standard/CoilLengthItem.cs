@@ -169,6 +169,8 @@ namespace Units.Standard
                 ValueInInch = Converter.ConvertLengthFrom_M_To_In(valueInMM / 1000.0);
                 ValueInM = valueInMM / 1000.0;
             }
+
+            
         }
 
 
@@ -180,6 +182,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public CoilLengthItem()

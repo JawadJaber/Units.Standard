@@ -283,6 +283,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         #endregion
@@ -345,8 +346,8 @@ namespace Units.Standard
                 ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(valueInMPS);
             }
 
+           
 
-            
         }
 
         public static class Factory

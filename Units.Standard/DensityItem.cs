@@ -57,6 +57,8 @@ namespace Units.Standard
                 ValueInKgPerM3 = valueInC;
                 ValueInLbPerFt3 = Converter.ConvertDensityFrom_KgPerM3_To_LbPerFt3(valueInC);
             }
+
+           
         }
 
 
@@ -163,6 +165,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public static class Factory

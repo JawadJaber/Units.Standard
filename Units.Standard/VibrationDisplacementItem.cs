@@ -150,6 +150,8 @@ namespace Units.Standard
                 //check this in inlets_vibrations..
                 
             }
+
+           
         }
 
 
@@ -161,6 +163,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         public VibrationDisplacementItem()

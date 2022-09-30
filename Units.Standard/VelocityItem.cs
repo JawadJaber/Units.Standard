@@ -66,6 +66,8 @@ namespace Units.Standard
                 ValueInMPS = valueInMPS;
                 ValueInFtPerMin = Converter.ConvertSpeedFrom_MPS_To_FtPerMin(valueInMPS);
             }
+
+           
         }
 
 
@@ -275,6 +277,7 @@ namespace Units.Standard
         {
             Unit = unit;
             Value = value;
+            StringValue = value.ToString();
         }
 
         protected VelocityItem(double value, string unit, string parameter)

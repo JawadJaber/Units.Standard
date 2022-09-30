@@ -48,6 +48,7 @@ namespace Units.Standard
             else
             {
                 unit.StringValue = "";
+                unit.Value = 0;
             }
         }
     }
