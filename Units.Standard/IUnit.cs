@@ -26,29 +26,47 @@ namespace Units.Standard
     {
         public static void UpdateValueWhenStringValueChanged(this IUnit unit, string DefaultParameter)
         {
-            var isDouble = double.TryParse(unit.StringValue, out double d);
-            if (isDouble)
+            if (unit != null)
             {
-                if (d != 0)
+                if (unit.StringValue == "-")
                 {
-                    unit.Value = d;
+                    return;
                 }
-                else
+
+                if (unit.StringValue == "-.")
                 {
-                    if (!string.IsNullOrWhiteSpace(DefaultParameter))
+                    return;
+                }
+
+                if (unit.StringValue == "-0.")
+                {
+                    return;
+                }
+
+                var isDouble = double.TryParse(unit.StringValue, out double d);
+                if (isDouble)
+                {
+                    if (d != 0)
                     {
-                        unit.StringValue = DefaultParameter;
+                        unit.Value = d;
                     }
                     else
                     {
-                        unit.Value = 0;
+                        if (!string.IsNullOrWhiteSpace(DefaultParameter))
+                        {
+                            unit.StringValue = DefaultParameter;
+                        }
+                        else
+                        {
+                            unit.Value = 0;
+                        }
                     }
                 }
-            }
-            else
-            {
-                unit.StringValue = "";
-                unit.Value = 0;
+                else
+                {
+                    unit.StringValue = "";
+                    unit.Value = 0;
+                }
             }
         }
     }

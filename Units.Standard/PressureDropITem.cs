@@ -664,6 +664,13 @@ namespace Units.Standard
             this.HigherValue.PropertyChanged += PressureValue_PropertyChanged;
         }
 
+
+        public void EventsDestruct()
+        {
+            this.LowerValue.PropertyChanged -= PressureValue_PropertyChanged;
+            this.HigherValue.PropertyChanged -= PressureValue_PropertyChanged;
+        }
+
         private void PressureValue_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var pressure_item = sender as PressureDropITem;
@@ -755,6 +762,37 @@ namespace Units.Standard
             }
 
             return 0;
+        }
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    EventsDestruct();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~PressureRangeItem()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 
