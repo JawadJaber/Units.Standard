@@ -313,5 +313,23 @@ namespace Units.Standard
             return areaInSqIn / 144.0;
         }
 
+
+        public static double ConvertAreaFrom_HZ_To_RPM(double hz)
+        {
+            return 60.0 * hz;
+        }
+
+
+        public static double ConvertAreaFrom_HZ_To_RPS(double hz)
+        {
+            return hz;
+        }
+
+
+        public static double ConvertAreaFrom_RPM_To_HZ(double rpm)
+        {
+            return rpm / 60.0;
+        }
+
     }
 }
