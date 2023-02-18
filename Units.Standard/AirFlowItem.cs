@@ -380,6 +380,18 @@ namespace Units.Standard
             return Value.ToString("N0") + " " + Unit;
         }
 
+        public string ToModifiableString(bool showComplete)
+        {
+            if (showComplete)
+            {
+                return ToString();
+            }
+            else
+            {
+                return Value.ToString("N0");
+            }
+        }
+
         public int CompareTo(object obj)
         {
             if (obj is AirFlowItem)

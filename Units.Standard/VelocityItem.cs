@@ -268,7 +268,7 @@ namespace Units.Standard
             this.Unit = unit;
         }
 
-        protected VelocityItem()
+        public VelocityItem()
         {
 
         }
