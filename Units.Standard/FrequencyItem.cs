@@ -352,5 +352,10 @@ namespace Units.Standard
             this.StringValue = Value.ToString();
         }
 
+        public override string ToString()
+        {
+            return $"{Value} {Unit}";
+        }
+
     }
 }
