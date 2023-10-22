@@ -289,9 +289,11 @@ namespace Units.Standard
 
         public static class Factory
         {
-            public static VelocityItem Create(double value, string unit) { return new VelocityItem(value, unit); }
+            public static VelocityItem Create(double value, string unit) { 
+                return new VelocityItem(value, unit); }
 
-            public static VelocityItem Create(double value, string unit, string parameter) { return new VelocityItem(value, unit, parameter); }
+            public static VelocityItem Create(double value, string unit, string parameter) { 
+                return new VelocityItem(value, unit, parameter); }
         }
 
 

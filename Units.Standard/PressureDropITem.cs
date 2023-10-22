@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
-    public class PressureDropITem : INotifyPropertyChanged, IUnit, IPressureDrop, ILiquidizable, IComparable, IComparable<PressureDropITem>
+    public class PressureDropITem : INotifyPropertyChanged, IUnit, IPressureDrop, ILiquidizable, IComparable, IComparable<PressureDropITem>, IDefaultParameter
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,9 +39,19 @@ namespace Units.Standard
             StringValue = value.ToString();
         }
 
+        public PressureDropITem(double value, string unit, string defaultPara)
+        {
+            Unit = unit;
+            Value = value;
+            StringValue = value.ToString();
+            DefaultParameter = defaultPara;
+        }
+
         public static class Factory
         {
             public static PressureDropITem Create(double value, string unit) { return new PressureDropITem(value, unit); }
+
+            public static PressureDropITem Create(double value, string unit, string parameter) { return new PressureDropITem(value, unit, parameter); }
         }
 
         public static PressureDropITem Create(PressureDropITem item)
@@ -158,6 +168,27 @@ namespace Units.Standard
             }
         }
 
+
+
+
+        [JsonProperty("DefaultParameter")]
+        private string _DefaultParameter { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string DefaultParameter
+        {
+            get
+            {
+                return _DefaultParameter;
+            }
+            set
+            {
+                if (_DefaultParameter == value)
+                    return;
+                _DefaultParameter = value;
+                OnPropertyChanged(nameof(DefaultParameter));
+            }
+        }
+
         #endregion
 
 
@@ -249,7 +280,7 @@ namespace Units.Standard
                     double valueInInWG = Value;
                     ValueInInWG = valueInInWG;
                     ValueInPa = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG);
-                    ValueInBar = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG)/100000;
+                    ValueInBar = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 100000;
                     ValueInKPa = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 1000;
                     ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG));
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
@@ -267,7 +298,7 @@ namespace Units.Standard
                     double valueInPSI = Value;
                     ValueInPSI = valueInPSI;
                     ValueInPa = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI);
-                    ValueInBar = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI)/100000;
+                    ValueInBar = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI) / 100000;
                     ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI));
                     ValueInKPa = ValueInPa / 1000;
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
@@ -276,7 +307,7 @@ namespace Units.Standard
                     double valueInFtWG = Value;
                     ValueInFtWG = valueInFtWG;
                     ValueInPa = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000;
-                    ValueInBar = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) /100;
+                    ValueInBar = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) / 100;
                     ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000);
                     ValueInKPa = ValueInPa / 1000;
                     ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000);
@@ -285,16 +316,16 @@ namespace Units.Standard
                     double valueInBar = Value;
                     ValueInBar = valueInBar;
                     ValueInPa = valueInBar * 100000;
-                    ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(valueInBar * 100) ;
+                    ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(valueInBar * 100);
                     ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInBar * 100000);
-                    ValueInKPa = valueInBar*100;
+                    ValueInKPa = valueInBar * 100;
                     ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInBar * 100000);
                     break;
                 default:
                     break;
             }
 
-           
+
 
         }
 
@@ -343,7 +374,7 @@ namespace Units.Standard
                     return;
                 _StringValue = value;
                 OnPropertyChanged(nameof(StringValue));
-                this.UpdateValueWhenStringValueChanged("");
+                this.UpdateValueWhenStringValueChanged(this.DefaultParameter);
             }
         }
         #endregion
@@ -354,11 +385,13 @@ namespace Units.Standard
             return new
             {
                 Unit,
-                Value = Value.ToString("N1"),
+                Value = Value != 0 ? Value.ToString("N1") : DefaultParameter,
+                StringValue = Value != 0 ? Value.ToString("N1") : DefaultParameter,
                 ValueInInWG,
                 ValueInPa,
                 ValueInPSI,
-                ValueInBar
+                ValueInBar,
+              
             };
         }
 
@@ -401,6 +434,16 @@ namespace Units.Standard
             return list;
         }
 
+        public static List<string> GetProofUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.Pa);
+            list.Add(U.inWG);
+            list.Add(U.PSI);
+
+            return list;
+        }
+
         public static List<string> GetWaterUnits()
         {
             var list = new List<string>();
@@ -413,6 +456,7 @@ namespace Units.Standard
         }
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+        public static List<string> AllProofUnits { get; set; } = GetProofUnits();
 
         public static List<string> AllUnits_Water { get; set; } = GetWaterUnits();
 
@@ -422,8 +466,16 @@ namespace Units.Standard
 
         public override string ToString()
         {
-             //return Value.ToSignificantDigits(2) + " " + Unit;
-             return Value.ToString("N1") + " " + Unit;
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
+            {
+                if (Value == 0)
+                {
+                    this.StringValue = DefaultParameter;
+                    return DefaultParameter;
+                }
+            }
+
+            return Value.ToString("N1") + " " + Unit;
         }
 
         public static PressureDropITem Parse(string s, IFormatProvider formatProvider)//default value to be added to distinquish between water and air pressure drops,,, same as air flow item.
@@ -462,7 +514,7 @@ namespace Units.Standard
 
             if (string.IsNullOrWhiteSpace(unit))
             {
-                unit = hashable.GetHashableUnit("Water"+OwnerUnitPropertyName);
+                unit = hashable.GetHashableUnit("Water" + OwnerUnitPropertyName);
             }
 
             if (dValue)
@@ -526,7 +578,7 @@ namespace Units.Standard
         string Unit { get; set; }
     }
 
-    public class PressureRangeItem: INotifyPropertyChanged, IPressureRangeItem, ILiquidizable, IComparable, IComparable<PressureRangeItem>,IEventsConstructable
+    public class PressureRangeItem : INotifyPropertyChanged, IPressureRangeItem, ILiquidizable, IComparable, IComparable<PressureRangeItem>, IEventsConstructable
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -549,7 +601,7 @@ namespace Units.Standard
 
         #region IUnit
 
-       
+
         public void UpdateWhenUnitChanged()
         {
             this.LowerValue.Unit = this.Unit.ToString();
@@ -562,7 +614,7 @@ namespace Units.Standard
         public void UpdateWhenValueChanged()
         {
             var strs = this.Value.Split('-');
-            if(strs.Length == 2)
+            if (strs.Length == 2)
             {
                 this.LowerValue.Value = strs[0].ToString().ToDouble();
                 this.HigherValue.Value = strs[1].ToString().ToDouble();
@@ -577,7 +629,7 @@ namespace Units.Standard
 
 
 
-        private PressureDropITem _LowerValue { get; set; } =  PressureDropITem.Factory.Create(0,U.kPa);
+        private PressureDropITem _LowerValue { get; set; } = PressureDropITem.Factory.Create(0, U.kPa);
         public PressureDropITem LowerValue
         {
             get
@@ -608,6 +660,12 @@ namespace Units.Standard
                     return;
                 _HigherValue = value;
                 OnPropertyChanged(nameof(HigherValue));
+
+                if (this.HigherValue != null)
+                {
+                    this.HigherValue.PropertyChanged -= PressureValue_PropertyChanged;
+                }
+
                 this.HigherValue.PropertyChanged += PressureValue_PropertyChanged;
             }
         }
@@ -660,6 +718,15 @@ namespace Units.Standard
 
         public void EventsConstruct()
         {
+            if (this.LowerValue != null)
+            {
+                this.LowerValue.PropertyChanged -= PressureValue_PropertyChanged;
+            }
+            if (this.HigherValue != null)
+            {
+                this.HigherValue.PropertyChanged -= PressureValue_PropertyChanged;
+            }
+
             this.LowerValue.PropertyChanged += PressureValue_PropertyChanged;
             this.HigherValue.PropertyChanged += PressureValue_PropertyChanged;
         }
@@ -667,6 +734,7 @@ namespace Units.Standard
 
         public void EventsDestruct()
         {
+           
             this.LowerValue.PropertyChanged -= PressureValue_PropertyChanged;
             this.HigherValue.PropertyChanged -= PressureValue_PropertyChanged;
         }
@@ -674,7 +742,7 @@ namespace Units.Standard
         private void PressureValue_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var pressure_item = sender as PressureDropITem;
-            if(pressure_item != null)
+            if (pressure_item != null)
             {
                 switch (e.PropertyName)
                 {
@@ -685,7 +753,7 @@ namespace Units.Standard
 
                     case nameof(PressureDropITem.Unit):
                         //this.Unit = pressure_item.Unit;
-                        
+
                         break;
 
                     default:
@@ -701,7 +769,7 @@ namespace Units.Standard
             HigherValue.UpdateWhenValueChanged();
 
             var value = GetShownValue();
-          
+
 
             return $"{value} {this.Unit}";
         }
@@ -722,7 +790,7 @@ namespace Units.Standard
 
         public static class Factory
         {
-            public static PressureRangeItem Create(string value, string unit) { return new PressureRangeItem() {Unit = unit, Value = value}; }
+            public static PressureRangeItem Create(string value, string unit) { return new PressureRangeItem() { Unit = unit, Value = value }; }
         }
 
         public static PressureRangeItem Create(PressureRangeItem item)
@@ -745,7 +813,7 @@ namespace Units.Standard
         public int CompareTo(object obj)
         {
             var pritem = obj as PressureRangeItem;
-            if(pritem != null)
+            if (pritem != null)
             {
                 return this.CompareTo(pritem);
             }
@@ -755,8 +823,8 @@ namespace Units.Standard
 
         public int CompareTo(PressureRangeItem other)
         {
-            
-            if(string.Equals(this.ToString(), other.ToString()))
+
+            if (string.Equals(this.ToString(), other.ToString()))
             {
                 return 1;
             }

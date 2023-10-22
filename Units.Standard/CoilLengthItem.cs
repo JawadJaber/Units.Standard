@@ -65,7 +65,7 @@ namespace Units.Standard
 
 
 
-        private double _ValueInM { get; set; } 
+        private double _ValueInM { get; set; }
         public double ValueInM
         {
             get
@@ -155,14 +155,14 @@ namespace Units.Standard
                 ValueInMM = Converter.ConvertLengthFrom_In_To_M(valueInInch) * 1000.0;
                 ValueInM = Converter.ConvertLengthFrom_In_To_M(valueInInch);
             }
-            else if(Unit == U.m)
+            else if (Unit == U.m)
             {
                 double valueInM = Value;
                 ValueInM = valueInM;
                 ValueInInch = Converter.ConvertLengthFrom_M_To_In(valueInM);
                 ValueInM = valueInM * 1000.0;
             }
-            else 
+            else
             {
                 double valueInMM = Value;
                 ValueInMM = valueInMM;
@@ -170,7 +170,7 @@ namespace Units.Standard
                 ValueInM = valueInMM / 1000.0;
             }
 
-            
+
         }
 
 
@@ -256,6 +256,7 @@ namespace Units.Standard
         public const string Name = nameof(CoilLengthItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+        public static List<string> FtInchMMUnits { get; set; } = new List<string>() { U.mm, U.ft, U.inch };
 
         public override string ToString()
         {

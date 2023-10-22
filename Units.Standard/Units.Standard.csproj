@@ -23,12 +23,11 @@ AllUnits static property added to all properties</PackageReleaseNotes>
     <FileVersion>1.0.22.4</FileVersion>
     <Company>Jawad S. Jaber</Company>
     <AssemblyVersion>1.0.22.4</AssemblyVersion>
-    <Authors>Jawad S. Jaber</Authors>
-    <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>Jawad_S_Jaber.pfx</AssemblyOriginatorKeyFile>
-    <DelaySign>True</DelaySign>
+   
+    <DelaySign>False</DelaySign>
     <Configurations>Debug;Release;Debug3;Debug2</Configurations>
 	  <SignAssembly>False</SignAssembly>
+	  <!--<AssemblyOriginatorKeyFile>C:\ProofSoftware\IS\InspectionSoftware\ProofDesktops\Proof.Desktop.TUV\3ESOL.pfx</AssemblyOriginatorKeyFile>-->
   </PropertyGroup>
 
   <ItemGroup>

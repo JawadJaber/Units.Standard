@@ -431,10 +431,22 @@ namespace Units.Standard
             return list;
         }
 
+        public static List<string> GetProofUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.CFM);
+            list.Add(U.LpS);
+            //list.Add(U.LPS);
+            list.Add(U.M3PS);
+            //list.Add(U.CMH);
+            return list;
+        }
+
 
         public const string Name = nameof(AirFlowItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+        public static List<string> AllProofUnits { get; set; } = GetProofUnits();
 
 
         [OnDeserialized]
