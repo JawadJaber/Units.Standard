@@ -475,7 +475,7 @@ namespace Units.Standard
                 }
             }
 
-            return Value.ToString("N1") + " " + Unit;
+            return Value.ToString("N2") + " " + Unit;
         }
 
         public static PressureDropITem Parse(string s, IFormatProvider formatProvider)//default value to be added to distinquish between water and air pressure drops,,, same as air flow item.

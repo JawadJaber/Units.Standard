@@ -331,5 +331,16 @@ namespace Units.Standard
             return rpm / 60.0;
         }
 
+
+        public static double ConvertMassFlowRateFrom_KgPerHr_To_IbPerHr(double kgPerHr)
+        {
+            return kgPerHr * 2.2046226218;
+        }
+
+        public static double ConvertMassFlowRateFrom_IbPerHr_To_KgPerHr(double IbPerHr)
+        {
+            return IbPerHr / 2.2046226218;
+        }
+
     }
 }

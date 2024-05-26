@@ -257,6 +257,7 @@ namespace Units.Standard
 
         public static List<string> AllUnits { get; set; } = GetUnits();
         public static List<string> FtInchMMUnits { get; set; } = new List<string>() { U.mm, U.ft, U.inch };
+        public static List<string> InchMMUnits { get; set; } = new List<string>() { U.mm, U.inch };
 
         public override string ToString()
         {

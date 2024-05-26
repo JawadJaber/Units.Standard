@@ -65,6 +65,8 @@ namespace Units.Standard
         public const string HZ = "Hz";
         public const string RPM = "rpm";
         public const string RPS = "rps";
+        public const string KgPerHr = "Kg/Hr";
+        public const string IbPerHr = "lbs/Hr";
 
         public static string ToUnit(this string inputUnit)
         {
