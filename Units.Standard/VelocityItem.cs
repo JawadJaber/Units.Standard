@@ -181,7 +181,7 @@ namespace Units.Standard
             var dValue = double.TryParse(s, out double r);
             if (dValue)
             {
-                return VelocityItem.Factory.Create(r, U.MPS);
+                return VelocityItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirVelocityUnit);
             }
             else
             {
@@ -191,10 +191,10 @@ namespace Units.Standard
                 var isNumber = double.TryParse(match.Value, out double v);
                 if (isNumber)
                 {
-                    return VelocityItem.Factory.Create(v, U.MPS);
+                    return VelocityItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirVelocityUnit);
                 }
 
-                return VelocityItem.Factory.Create(0, U.MPS);
+                return VelocityItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirVelocityUnit);
             }
         }
 
@@ -214,7 +214,7 @@ namespace Units.Standard
                 }
                 else
                 {
-                    return VelocityItem.Factory.Create(r, U.MPS);
+                    return VelocityItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirVelocityUnit);
                 }
 
             }
@@ -233,7 +233,7 @@ namespace Units.Standard
                     }
                     else
                     {
-                        return VelocityItem.Factory.Create(v, U.MPS);
+                        return VelocityItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirVelocityUnit);
                     }
                 }
 
@@ -243,7 +243,58 @@ namespace Units.Standard
                 }
                 else
                 {
-                    return VelocityItem.Factory.Create(0, U.MPS);
+                    return VelocityItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirVelocityUnit);
+                }
+
+
+            }
+        }
+
+
+        public static VelocityItem Parse(string s, IHashable hashable,IRandomHashCode randomHashCode, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName,randomHashCode.RandomHashCode);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return VelocityItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return VelocityItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirVelocityUnit);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+(.)?\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return VelocityItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return VelocityItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirVelocityUnit);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return VelocityItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return VelocityItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirVelocityUnit);
                 }
 
 
@@ -323,9 +374,28 @@ namespace Units.Standard
                 }
             }
 
+
             return $"{Value.ToString("N2")} {Unit}";
         }
 
+
+        public string ToStringProofReport()
+        {
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
+            {
+                if (Value == 0)
+                {
+                    return DefaultParameter;
+                }
+            }
+
+            if(this.Unit == U.FtPerMin)
+            {
+                return $"{Value.ToString("N0")} {Unit}";
+            }
+
+            return $"{Value.ToString("N2")} {Unit}";
+        }
 
         public int CompareTo(object obj)
         {

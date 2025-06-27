@@ -99,6 +99,11 @@ namespace Units.Standard
                 _Value = value;
                 OnPropertyChanged(nameof(Value));
                 UpdateWhenValueChanged();
+
+                if(Value.ToString("N2") == "96.86")
+                {
+
+                }
             }
         }
 
@@ -259,7 +264,7 @@ namespace Units.Standard
         }
 
 
-        public static string OwnerUnitPropertyName = "PressureDropUnit";
+        public static string OwnerUnitPropertyName = "TempUnit";
 
         public static TemperatureItem Parse(string s, IHashable hashable, IFormatProvider formatProvider)
         {
@@ -275,7 +280,7 @@ namespace Units.Standard
                 }
                 else
                 {
-                    return TemperatureItem.Factory.Create(r, U.C);
+                    return TemperatureItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirTemperatureUnit);
                 }
 
             }
@@ -294,7 +299,58 @@ namespace Units.Standard
                     }
                     else
                     {
-                        return TemperatureItem.Factory.Create(v, U.C);
+                        return TemperatureItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirTemperatureUnit);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return TemperatureItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return TemperatureItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirTemperatureUnit);
+                }
+
+
+            }
+        }
+
+
+        public static TemperatureItem Parse(string s, IHashable hashable,IRandomHashCode randomHashCode, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit(OwnerUnitPropertyName,randomHashCode.RandomHashCode);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return TemperatureItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return TemperatureItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirTemperatureUnit);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+(.)?\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return TemperatureItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return TemperatureItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirTemperatureUnit);
                     }
                 }
 
@@ -310,7 +366,6 @@ namespace Units.Standard
 
             }
         }
-
 
 
         private string _Comment { get; set; } = string.Empty;

@@ -280,6 +280,20 @@ namespace Units.Standard
         }
 
 
+        public string ToString2Vibration()
+        {
+            if (Unit == U.InchPerSec)
+            {
+                return Value.ToDouble_SigFig(2) + " " + "in/s";
+            }
+            else
+            {
+
+                return Value.ToDouble_SigFig(2) + " " + Unit;
+
+            }
+        }
+
         public int CompareTo(object obj)
         {
             if (obj is VibrationVelocityItem)

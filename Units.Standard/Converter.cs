@@ -59,6 +59,39 @@ namespace Units.Standard
             return LengthInInch * 0.0254;
         }
 
+        public static double ConvertVolumeFrom_CuIn_To_CuM(double LengthInCuInch)
+        {
+            return LengthInCuInch / 61023.7;
+        }
+
+        public static double ConvertVolumeFrom_CuM_To_CuInch(double LengthInCuM)
+        {
+            return LengthInCuM * 61023.7;
+        }
+
+
+        public static double ConvertVolumeFrom_CuM_To_CuFt(double LengthInCuM)
+        {
+            return LengthInCuM * 35.3146412031104;
+        }
+
+        public static double ConvertVolumeFrom_CuFt_To_CuM(double LengthInCuFt)
+        {
+            return LengthInCuFt / 35.3146412031104;
+        }
+
+
+        public static double ConvertVolumeFrom_CuFt_To_CuInch(double LengthInCuFt)
+        {
+            return LengthInCuFt * 1728.0;
+        }
+
+        public static double ConvertVolumeFrom_CuInch_To_CuFt(double LengthInCuInch)
+        {
+            return LengthInCuInch / 1728.0;
+        }
+
+
 
         public static double ConvertLengthFrom_MM_To_Mils(double LengthInMM)
         {
@@ -78,6 +111,16 @@ namespace Units.Standard
         public static double ConvertLengthFrom_Ft_To_M(double LengthInFeet)
         {
             return LengthInFeet * 0.3048;
+        }
+
+        public static double ConvertLengthFrom_Ft_To_Inch(double lengthInFt)
+        {
+            return lengthInFt * 12.0;
+        }
+
+        public static double ConvertLengthFrom_Inch_To_Ft(double lengthInFt)
+        {
+            return lengthInFt / 12.0;
         }
 
         public static double Convert_FinsPerInch_To_FinsPerMeter(double FinsPerInch)
@@ -340,6 +383,17 @@ namespace Units.Standard
         public static double ConvertMassFlowRateFrom_IbPerHr_To_KgPerHr(double IbPerHr)
         {
             return IbPerHr / 2.2046226218;
+        }
+
+        //7.93664
+        public static double ConvertMassFlowRateFrom_IbPerHr_To_GPerS(double IbPerHr)
+        {
+            return IbPerHr / 7.93664;
+        }
+
+        public static double ConvertMassFlowRateFrom_GPerS_To_IbPerHr(double IbPerHr)
+        {
+            return IbPerHr * 7.93664;
         }
 
     }

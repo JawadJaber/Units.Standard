@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
-    public class AirFlowItem : IUnit, IAirFlow, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<AirFlowItem>
+    public class AirFlowItem : IUnit, IAirFlow, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<AirFlowItem>, IDefaultParameter
     {
         #region NotifiedPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,6 +26,34 @@ namespace Units.Standard
 
         #endregion
 
+
+        #region IDefaultParameter
+
+
+        #region IDefaultParameter
+
+
+
+        private string _DefaultParameter { get; set; } = string.Empty;
+        public string DefaultParameter
+        {
+            get
+            {
+                return _DefaultParameter;
+            }
+            set
+            {
+                if (_DefaultParameter == value)
+                    return;
+                _DefaultParameter = value;
+                OnPropertyChanged(nameof(DefaultParameter));
+            }
+        }
+
+
+        #endregion
+
+        #endregion
 
         #region Properties
 
@@ -95,7 +123,7 @@ namespace Units.Standard
 
         [JsonProperty("Unit")]
         private string _Unit { get; set; }
-       
+
         [JsonIgnore]
         public string Unit
         {
@@ -149,7 +177,7 @@ namespace Units.Standard
                     return;
                 _StringValue = value;
                 OnPropertyChanged(nameof(StringValue));
-                this.UpdateValueWhenStringValueChanged("");
+                this.UpdateValueWhenStringValueChanged(this.DefaultParameter);
             }
         }
 
@@ -175,10 +203,10 @@ namespace Units.Standard
 
                 if (isNumber)
                 {
-                    return AirFlowItem.Factory.Create(v, U.LpS);
+                    return AirFlowItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirFlowUnit);
                 }
 
-                return AirFlowItem.Factory.Create(0, U.LpS);
+                return AirFlowItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirFlowUnit);
             }
         }
 
@@ -197,7 +225,7 @@ namespace Units.Standard
                 }
                 else
                 {
-                    return AirFlowItem.Factory.Create(r, U.LpS);
+                    return AirFlowItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirFlowUnit);
                 }
 
             }
@@ -216,7 +244,7 @@ namespace Units.Standard
                     }
                     else
                     {
-                        return AirFlowItem.Factory.Create(v, U.LpS);
+                        return AirFlowItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirFlowUnit);
                     }
                 }
 
@@ -226,13 +254,63 @@ namespace Units.Standard
                 }
                 else
                 {
-                    return AirFlowItem.Factory.Create(0, U.LpS);
+                    return AirFlowItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirFlowUnit);
                 }
 
-               
+
             }
         }
 
+
+        public static AirFlowItem Parse(string s, IHashable hashable,IRandomHashCode ownerHashable, IFormatProvider formatProvider)
+        {
+
+            var dValue = double.TryParse(s, out double r);
+            var unit = hashable.GetHashableUnit("AirFlowUnit",ownerHashable.RandomHashCode);
+
+            if (dValue)
+            {
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AirFlowItem.Factory.Create(r, unit);
+                }
+                else
+                {
+                    return AirFlowItem.Factory.Create(r, DefaultUnit.Instance.DefaultAirFlowUnit);
+                }
+
+            }
+            else
+            {
+                Regex regex = new Regex(@"\d+(.)?\d+");
+                Match match = regex.Match(s);
+
+                var isNumber = double.TryParse(match.Value, out double v);
+
+                if (isNumber)
+                {
+                    if (!string.IsNullOrWhiteSpace(unit))
+                    {
+                        return AirFlowItem.Factory.Create(v, unit);
+                    }
+                    else
+                    {
+                        return AirFlowItem.Factory.Create(v, DefaultUnit.Instance.DefaultAirFlowUnit);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(unit))
+                {
+                    return AirFlowItem.Factory.Create(0, unit);
+                }
+                else
+                {
+                    return AirFlowItem.Factory.Create(0, DefaultUnit.Instance.DefaultAirFlowUnit);
+                }
+
+
+            }
+        }
         public AirFlowItem()
         {
             Unit = U.LpS;
@@ -284,6 +362,14 @@ namespace Units.Standard
             Unit = unit;
             Value = value;
             StringValue = value.ToString();
+        }
+
+
+        protected AirFlowItem(double value, string unit, string parameter)
+        {
+            Unit = unit;
+            Value = value;
+            DefaultParameter = parameter;
         }
 
         #endregion
@@ -346,18 +432,19 @@ namespace Units.Standard
                 ValueInCFM = Converter.ConvertAirFlowFrom_M3PS_To_CFM(valueInMPS);
             }
 
-           
+
 
         }
 
         public static class Factory
         {
             public static AirFlowItem Create(double value, string unit) { return new AirFlowItem(value, unit); }
+            public static AirFlowItem Create(double value, string unit, string defaultParameter) { return new AirFlowItem(value, unit, defaultParameter); }
         }
 
         public static AirFlowItem Create(AirFlowItem item)
         {
-            return AirFlowItem.Factory.Create(item.Value, item.Unit);
+            return AirFlowItem.Factory.Create(item.Value, item.Unit, item.DefaultParameter);
         }
 
         public object ToLiquid()
@@ -377,6 +464,15 @@ namespace Units.Standard
 
         public override string ToString()
         {
+
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
+            {
+                if (Value == 0)
+                {
+                    return DefaultParameter;
+                }
+            }
+
             return Value.ToString("N0") + " " + Unit;
         }
 
@@ -388,6 +484,14 @@ namespace Units.Standard
             }
             else
             {
+                if (!string.IsNullOrWhiteSpace(DefaultParameter))
+                {
+                    if (Value == 0)
+                    {
+                        return DefaultParameter;
+                    }
+                }
+
                 return Value.ToString("N0");
             }
         }
@@ -437,15 +541,15 @@ namespace Units.Standard
             list.Add(U.CFM);
             list.Add(U.LpS);
             //list.Add(U.LPS);
-            list.Add(U.M3PS);
-            //list.Add(U.CMH);
+            //list.Add(U.M3PS);
+            list.Add(U.CMH);
             return list;
         }
 
 
         public const string Name = nameof(AirFlowItem);
 
-        public static List<string> AllUnits { get; set; } = GetUnits();
+        public static List<string> AllUnits { get; set; } = GetProofUnits();
         public static List<string> AllProofUnits { get; set; } = GetProofUnits();
 
 

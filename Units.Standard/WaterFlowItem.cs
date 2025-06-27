@@ -9,8 +9,30 @@ using System.Text.RegularExpressions;
 
 namespace Units.Standard
 {
-    public class WaterFlowItem : IUnit, IWaterFlow, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<WaterFlowItem>
+    public class WaterFlowItem : IUnit, IWaterFlow, INotifyPropertyChanged, ILiquidizable, IComparable, IComparable<WaterFlowItem>,IDefaultParameter
     {
+
+        #region IDefaultParameter
+
+        private string _DefaultParameter { get; set; } = string.Empty;
+        public string DefaultParameter
+        {
+            get
+            {
+                return _DefaultParameter;
+            }
+            set
+            {
+                if (_DefaultParameter == value)
+                    return;
+                _DefaultParameter = value;
+                OnPropertyChanged(nameof(DefaultParameter));
+            }
+        }
+
+        #endregion
+
+
         public WaterFlowItem(double valueInGPM, double valueInMPS, double valueInLPS, string unit)
         {
             if (unit == U.GPM)
@@ -49,14 +71,23 @@ namespace Units.Standard
             StringValue = value.ToString();
         }
 
+        protected WaterFlowItem(double value, string unit, string parameter)
+        {
+            Unit = unit;
+            Value = value;
+            DefaultParameter = parameter;
+        }
+
         public static class Factory
         {
             public static WaterFlowItem Create(double value, string unit) { return new WaterFlowItem(value, unit); }
+
+            public static WaterFlowItem Create(double value, string unit, string defaultParameter) { return new WaterFlowItem(value, unit, defaultParameter); }
         }
 
         public static WaterFlowItem Create(WaterFlowItem item)
         {
-            return Factory.Create(item.Value, item.Unit);
+            return Factory.Create(item.Value, item.Unit,item.DefaultParameter);
         }
 
 
@@ -284,16 +315,42 @@ namespace Units.Standard
 
         public override string ToString()
         {
-            if (Unit == U.M3PS)
-            {
 
-                return Value.ToString("N5") + " " + Unit;
-            }
-            else
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
             {
-                return Value.ToString("N2") + " " + Unit;
-
+                if (Value == 0)
+                {
+                    return DefaultParameter;
+                }
             }
+
+
+            return Value.ToString("N5") + " " + Unit;
+
+            //if (Unit == U.M3PS)
+            //{
+
+            //    return Value.ToString("N5") + " " + Unit;
+            //}
+            //else
+            //{
+            //    return Value.ToString("N2") + " " + Unit;
+
+            //}
+        }
+
+
+        public string ToModifiableString(string numberOfDigits)
+        {
+            if (!string.IsNullOrWhiteSpace(DefaultParameter))
+            {
+                if (Value == 0)
+                {
+                    return DefaultParameter;
+                }
+            }
+
+            return this.Value.ToString("N" + numberOfDigits);
         }
 
 
@@ -386,7 +443,7 @@ namespace Units.Standard
                     return;
                 _StringValue = value;
                 OnPropertyChanged(nameof(StringValue));
-                this.UpdateValueWhenStringValueChanged("");
+                this.UpdateValueWhenStringValueChanged(this.DefaultParameter);
             }
         }
 
