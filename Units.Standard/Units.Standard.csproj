@@ -35,7 +35,10 @@ AllUnits static property added to all properties</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\StdHelpers\StdHelpers\StdHelpers\StdHelpers.csproj" />
+    <ProjectReference Include="..\..\..\StdHelpers\StdHelpers\StdHelpers\StdHelpers.csproj" Condition="'$(OS)' == 'Windows_NT'" />
+    
+    <ProjectReference Include="..\..\StdHelpers\StdHelpers\StdHelpers.csproj" Condition="'$(OS)' != 'Windows_NT'"/>
+    
   </ItemGroup>
 
 </Project>
