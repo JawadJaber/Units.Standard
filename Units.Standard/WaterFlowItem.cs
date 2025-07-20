@@ -307,10 +307,22 @@ namespace Units.Standard
             return list;
         }
 
+        public static List<string> GetFireUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.GPM);
+            list.Add(U.LpS);
+            //list.Add(U.LPS);
+            //list.Add(U.M3PS);
+
+            return list;
+        }
+
 
         public const string Name = nameof(WaterFlowItem);
 
         public static List<string> AllUnits { get; set; } = GetUnits();
+        public static List<string> AllUnitsFire { get; set; } = GetFireUnits();
         public static List<string> AllProofUnits { get; set; } = GetProofUnits();
 
         public override string ToString()

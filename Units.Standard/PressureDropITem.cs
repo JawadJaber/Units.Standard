@@ -270,56 +270,56 @@ namespace Units.Standard
                 case U.Pa:
                     double valueInPa = Value;
                     ValueInPa = valueInPa;
+                    ValueInKPa = valueInPa / 1000.0;
+                    ValueInBar = valueInPa / 100000.0;
                     ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInPa);
-                    ValueInKPa = valueInPa / 1000;
                     ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInPa);
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
-                    ValueInBar = valueInPa / 100000;
                     break;
                 case U.inWG:
                     double valueInInWG = Value;
                     ValueInInWG = valueInInWG;
                     ValueInPa = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG);
-                    ValueInBar = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 100000;
-                    ValueInKPa = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 1000;
+                    ValueInBar = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 100000.0;
+                    ValueInKPa = Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG) / 1000.0;
                     ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(Converter.ConvertPressureDropFrom_InWG_ToPa(valueInInWG));
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
                     break;
                 case U.kPa:
                     double valueInKPa = Value;
                     ValueInKPa = valueInKPa;
-                    ValueInPa = valueInKPa * 1000;
-                    ValueInBar = valueInKPa / 100;
-                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInKPa * 1000);
-                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInKPa * 1000);
+                    ValueInPa = valueInKPa * 1000.0;
+                    ValueInBar = valueInKPa / 100.0;
+                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInKPa * 1000.0);
+                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInKPa * 1000.0);
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
                     break;
                 case U.PSI:
                     double valueInPSI = Value;
                     ValueInPSI = valueInPSI;
                     ValueInPa = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI);
-                    ValueInBar = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI) / 100000;
+                    ValueInBar = Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI) / 100000.0;
                     ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(Converter.ConvertPressureDropFrom_PSI_ToPa(valueInPSI));
-                    ValueInKPa = ValueInPa / 1000;
+                    ValueInKPa = ValueInPa / 1000.0;
                     ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(ValueInKPa);
                     break;
                 case U.ftWG:
                     double valueInFtWG = Value;
                     ValueInFtWG = valueInFtWG;
-                    ValueInPa = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000;
-                    ValueInBar = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) / 100;
-                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000);
-                    ValueInKPa = ValueInPa / 1000;
-                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000);
+                    ValueInPa = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000.0;
+                    ValueInBar = Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) / 100.0;
+                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000.0);
+                    ValueInKPa = ValueInPa / 1000.0;
+                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(Converter.ConvertPressureFrom_FtWG_To_kPa(valueInFtWG) * 1000.0);
                     break;
                 case U.Bar:
                     double valueInBar = Value;
                     ValueInBar = valueInBar;
-                    ValueInPa = valueInBar * 100000;
-                    ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(valueInBar * 100);
-                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInBar * 100000);
-                    ValueInKPa = valueInBar * 100;
-                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInBar * 100000);
+                    ValueInPa = valueInBar * 100000.0;
+                    ValueInKPa = valueInBar * 100.0;
+                    ValueInFtWG = Converter.ConvertPressureDropFrom_kPa_To_FtWG(valueInBar * 100.0);
+                    ValueInInWG = Converter.ConvertPressureDropFrom_Pa_To_INWG(valueInBar * 100000.0);
+                    ValueInPSI = Converter.ConvertPressureDropFrom_Pa_To_PSI(valueInBar * 100000.0);
                     break;
                 default:
                     break;
@@ -444,6 +444,16 @@ namespace Units.Standard
             return list;
         }
 
+        public static List<string> GetAirUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.Pa);
+            list.Add(U.inWG);
+           
+
+            return list;
+        }
+
         public static List<string> GetWaterUnits()
         {
             var list = new List<string>();
@@ -455,8 +465,21 @@ namespace Units.Standard
             return list;
         }
 
+        public static List<string> GetFireRefUnits()
+        {
+            var list = new List<string>();
+            list.Add(U.kPa);
+            list.Add(U.ftWG);
+            //list.Add(U.Bar);
+            list.Add(U.PSI);
+
+            return list;
+        }
+
         public static List<string> AllUnits { get; set; } = GetUnits();
         public static List<string> AllProofUnits { get; set; } = GetProofUnits();
+        public static List<string> AllAirUnits { get; set; } = GetAirUnits();
+        public static List<string> AllFireRefUnits { get; set; } = GetFireRefUnits();
 
         public static List<string> AllUnits_Water { get; set; } = GetWaterUnits();
 

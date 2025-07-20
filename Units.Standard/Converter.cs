@@ -205,6 +205,22 @@ namespace Units.Standard
         }
 
 
+       
+
+
+        public static double ConvertFoulingFactorFrom_Sqft_h_FPerBtu_to_SqM_CPerkW(double Sqft_h_FPerBtu)
+        {
+
+            return Sqft_h_FPerBtu / 0.0056779;
+        }
+
+        public static double ConvertFoulingFactorFrom_SqM_CPerkW_to_Sqft_h_FPerBtu(double SqM_CPerkW)
+        {
+
+            return SqM_CPerkW * 0.0056779;
+        }
+
+
         public static double ConvertPressureDropFrom_Pa_To_INWG(double Pa)
         {
             return Pa / 249.0;
@@ -224,21 +240,6 @@ namespace Units.Standard
         {
             return kPa * 0.33455256555148;
         }
-
-
-        public static double ConvertFoulingFactorFrom_Sqft_h_FPerBtu_to_SqM_CPerkW(double Sqft_h_FPerBtu)
-        {
-
-            return Sqft_h_FPerBtu / 0.0056779;
-        }
-
-        public static double ConvertFoulingFactorFrom_SqM_CPerkW_to_Sqft_h_FPerBtu(double SqM_CPerkW)
-        {
-
-            return SqM_CPerkW * 0.0056779;
-        }
-
-
         public static double ConvertPressureDropFrom_Pa_To_PSI(double Pa)
         {
             return Pa / 6894.76;

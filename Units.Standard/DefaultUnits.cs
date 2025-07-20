@@ -16,6 +16,7 @@ namespace Units.Standard
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(PressureDropITem), "U.inWG"));
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(CoilLengthItem), "U.inch"));
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(WaterMassFlowItem), "U.IbPerHr"));
+            DefaultUnitsList.Add(new Tuple<string, string>(nameof(RefrigerantMassFlowItem), "U.IbPerHr"));
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(WaterFlowItem), "U.GPM"));
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(AltitudeItem), "U.ft"));
             DefaultUnitsList.Add(new Tuple<string, string>(nameof(AreaItem), "U.SqIn"));
