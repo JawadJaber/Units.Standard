@@ -100,10 +100,7 @@ namespace Units.Standard
                 OnPropertyChanged(nameof(Value));
                 UpdateWhenValueChanged();
 
-                if(Value.ToString("N2") == "96.86")
-                {
-
-                }
+                
             }
         }
 
@@ -161,6 +158,15 @@ namespace Units.Standard
         public TemperatureItem()
         {
 
+        }
+
+        public void UpdateIfZero()
+        {
+            if(this.Value == 0)
+            {
+                UpdateWhenValueChanged();
+            }
+            
         }
 
         private TemperatureItem(double value, string unit)
