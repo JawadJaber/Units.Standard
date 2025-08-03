@@ -581,7 +581,7 @@ namespace Units.Standard
                     }
                     else
                     {
-                        return PressureDropITem.Factory.Create(v, U.kPa);
+                        return PressureDropITem.Factory.Create(v, DefaultUnit.Instance.DefaultAirTemperatureUnit);
                     }
                 }
 
@@ -742,7 +742,7 @@ namespace Units.Standard
 
 
         [JsonProperty("LowerValue")]
-        private PressureDropITem _LowerValue { get; set; } = PressureDropITem.Factory.Create(100, U.inWG);
+        private PressureDropITem _LowerValue { get; set; } = PressureDropITem.Factory.Create(0, U.inWG);
         [JsonIgnore]
         public PressureDropITem LowerValue
         {
@@ -783,7 +783,7 @@ namespace Units.Standard
 
 
         [JsonProperty("HigherValue")]
-        private PressureDropITem _HigherValue { get; set; } = PressureDropITem.Factory.Create(100, U.inWG);
+        private PressureDropITem _HigherValue { get; set; } = PressureDropITem.Factory.Create(0, U.inWG);
         [JsonIgnore]
         public PressureDropITem HigherValue
         {
