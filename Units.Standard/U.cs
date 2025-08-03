@@ -19,6 +19,7 @@ namespace Units.Standard
         public const string CFM = "CFM";
         public const string LPS = "LPS";
         public const string LpS = "L/s";
+        public const string LpM = "L/m";
         public const string MPS = "m/s";
         public const string M3PS = "m³/s";
         public const string CMH = "m³/hr";

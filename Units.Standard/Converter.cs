@@ -147,6 +147,11 @@ namespace Units.Standard
             return FlowInMPS * 1000.0;
         }
 
+        public static double ConvertAirFlowFrom_M3PS_To_LPM(double FlowInMPS)
+        {
+            return FlowInMPS * 1000.0 * 60.0;
+        }
+
         public static double ConvertAirFlowFrom_M3PS_To_CMH(double FlowInMPS)
         {
             return FlowInMPS * 3600.0;
@@ -161,6 +166,11 @@ namespace Units.Standard
         public static double ConvertAirFlowFrom_LPS_To_M3PS(double FlowInLPS)
         {
             return FlowInLPS / 1000.0;
+        }
+
+        public static double ConvertAirFlowFrom_LPM_To_M3PS(double FlowInLPS)
+        {
+            return FlowInLPS / (1000.0 * 60.0);
         }
 
         public static double ConvertAirFlowFrom_CMH_To_M3PS(double FlowInCMH)
@@ -181,6 +191,10 @@ namespace Units.Standard
             return FlowInMPS * 1000.0;
         }
 
+        public static double ConvertWaterFlowFrom_M3PS_To_LPM(double FlowInMPS)
+        {
+            return FlowInMPS * 1000.0 * 60.0;
+        }
 
         public static double ConvertWaterFlowFrom_MPS_To_CMH(double FlowInMPS)
         {
@@ -188,7 +202,7 @@ namespace Units.Standard
         }
 
 
-        public static double ConvertWaterFlowFrom_GMP_To_M3PS(double FlowInGPM)
+        public static double ConvertWaterFlowFrom_GPM_To_M3PS(double FlowInGPM)
         {
             return FlowInGPM / 15850.372483753;//13198.127997058;
         }
@@ -196,6 +210,11 @@ namespace Units.Standard
         public static double ConvertWaterFlowFrom_LPS_To_M3PS(double FlowInLPS)
         {
             return FlowInLPS / 1000.0;
+        }
+
+        public static double ConvertWaterFlowFrom_LPM_To_M3PS(double FlowInLPS)
+        {
+            return FlowInLPS / (1000.0*60.0);
         }
 
 

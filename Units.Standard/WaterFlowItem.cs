@@ -38,7 +38,7 @@ namespace Units.Standard
             if (unit == U.GPM)
             {
                 ValueInGPM = valueInGPM;
-                ValueInM3PS = Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM);
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_GPM_To_M3PS(valueInGPM);
                 ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(ValueInM3PS);
                 Unit = unit;
             }
@@ -166,6 +166,27 @@ namespace Units.Standard
             }
         }
 
+
+
+        [JsonProperty("ValueInLPM")]
+        private double _ValueInLPM { get; set; } = 0;
+        [JsonIgnore]
+        public double ValueInLPM
+        {
+            get
+            {
+                return _ValueInLPM;
+            }
+            set
+            {
+                if (_ValueInLPM == value)
+                    return;
+                _ValueInLPM = value;
+                OnPropertyChanged(nameof(ValueInLPM));
+            }
+        }
+
+
         private double _ValueInMPS { get; set; }
         public double ValueInM3PS
         {
@@ -198,7 +219,10 @@ namespace Units.Standard
             {
                 Value = ValueInM3PS;
             }
-
+            else if (Unit == U.LpM)
+            {
+                Value = ValueInLPM;
+            }
         }
 
         public void UpdateWhenValueChanged()
@@ -207,8 +231,9 @@ namespace Units.Standard
             {
                 double valueInGPM = Value;
                 ValueInGPM = valueInGPM;
-                ValueInM3PS = Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM);
-                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(Converter.ConvertWaterFlowFrom_GMP_To_M3PS(valueInGPM));
+                ValueInM3PS = Converter.ConvertWaterFlowFrom_GPM_To_M3PS(valueInGPM);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(Converter.ConvertWaterFlowFrom_GPM_To_M3PS(valueInGPM));
+                ValueInLPM = Converter.ConvertWaterFlowFrom_M3PS_To_LPM(ValueInM3PS);
             }
             else if (Unit == U.LPS || Unit == U.LpS)
             {
@@ -216,6 +241,7 @@ namespace Units.Standard
                 ValueInLPS = valueInLPS;
                 ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(Converter.ConvertWaterFlowFrom_LPS_To_M3PS(valueInLPS));
                 ValueInM3PS = Converter.ConvertWaterFlowFrom_LPS_To_M3PS(valueInLPS);
+                ValueInLPM = Converter.ConvertWaterFlowFrom_M3PS_To_LPM(ValueInM3PS);
             }
             else if (Unit == U.M3PS)
             {
@@ -223,9 +249,17 @@ namespace Units.Standard
                 ValueInM3PS = valueInMPS;
                 ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(valueInMPS);
                 ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(valueInMPS);
+                ValueInLPM = Converter.ConvertWaterFlowFrom_M3PS_To_LPM(valueInMPS);
+            }
+            else if (Unit == U.LpM)
+            {
+                double valueInLPM = Value;
+                ValueInLPM = valueInLPM;
+                ValueInM3PS = Converter.ConvertAirFlowFrom_LPM_To_M3PS(valueInLPM); ;
+                ValueInGPM = Converter.ConvertWaterFlowFrom_M3PS_To_GPM(ValueInM3PS);
+                ValueInLPS = Converter.ConvertWaterFlowFrom_M3PS_To_LPS(ValueInM3PS);
             }
 
-           
 
         }
 
@@ -292,6 +326,7 @@ namespace Units.Standard
             list.Add(U.LpS);
             list.Add(U.LPS);
             list.Add(U.M3PS);
+            list.Add(U.LpM);
 
             return list;
         }
